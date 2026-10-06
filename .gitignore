@@ -1,0 +1,18 @@
+# Ignore raw camera originals (not used by the website)
+anh/*.JPG
+anh/*.jpeg
+anh/*.jpg
+anh/*.PNG
+anh/*.png
+anh/album1/
+anh/couple/*
+!anh/couple/optimized/
+anh/tet/*
+!anh/tet/optimized/
+anh/tot nghiep/*
+!anh/tot nghiep/optimized/
+
+# OS and temporary files
+.DS_Store
+*.log
+.vercel

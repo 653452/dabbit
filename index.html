@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>DABBIT STUDIO – Photography & Memories</title>
+  <meta name="description" content="DABBIT Studio – Studio nhiếp ảnh cao cấp chuyên chụp Couple, Tết và Kỉ yếu. Những khoảnh khắc đẹp không chỉ để nhìn lại mà để cảm nhận lại." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Be+Vietnam+Pro:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════
+       SIDEBAR (Desktop)
+  ═══════════════════════════════════════ -->
+  <aside class="sidebar" id="sidebar" aria-label="Navigation sidebar">
+
+    <div class="sidebar-logo">
+      <div class="logo-box" aria-label="DABBIT STUDIO logo">
+        <span class="logo-line1">DABBIT</span>
+        <span class="logo-line2">STUDIO</span>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav" aria-label="Main navigation">
+      <ul>
+        <li><a href="#story" class="nav-link" data-section="story">Giới thiệu</a></li>
+        <li><a href="#portfolio" class="nav-link" data-section="portfolio">Portfolio</a></li>
+        <li><a href="#pricing" class="nav-link" data-section="pricing">Dịch vụ</a></li>
+        <li><a href="#pricing" class="nav-link">Bảng giá</a></li>
+        <li><a href="#footer" class="nav-link" data-section="footer">Liên hệ</a></li>
+      </ul>
+    </nav>
+
+    <div class="sidebar-divider"></div>
+
+    <div class="sidebar-socials">
+      <a href="#" class="social-link" aria-label="Instagram" target="_blank" rel="noopener">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+      </a>
+      <a href="#" class="social-link" aria-label="TikTok" target="_blank" rel="noopener">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>
+      </a>
+    </div>
+
+    <p class="sidebar-quote sidebar-collapsible" aria-label="Studio tagline">
+      "Ảnh không chỉ là hình ảnh,<br>mà là cảm xúc được giữ lại."
+    </p>
+
+  </aside>
+
+  <!-- Toggle button – ngoài aside để không bị overflow:hidden cắt -->
+  <button class="sidebar-toggle" id="sidebar-toggle-btn" aria-label="Thu gọn thanh menu" aria-expanded="true">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+  </button>
+
+  <!-- ═══════════════════════════════════════
+       DESKTOP TOP-RIGHT CONTACT CAPSULE
+  ═══════════════════════════════════════ -->
+  <aside class="desktop-top-contact" aria-label="Liên hệ nhanh">
+    <a href="tel:0857170905" class="top-nav-btn top-nav-phone" title="Gọi hotline 0857 170 905" aria-label="Gọi hotline 0857 170 905">
+      <span class="btn-live-dot" aria-hidden="true"></span>
+      <svg class="contact-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+      </svg>
+      <span class="top-nav-phone-num">0857 170 905</span>
+    </a>
+    <a href="https://zalo.me/0857170905" target="_blank" rel="noopener noreferrer" class="top-nav-btn top-nav-zalo" title="Chat Zalo 0857 170 905" aria-label="Chat Zalo">
+      <svg class="contact-icon zalo-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M12 2C6.477 2 2 5.92 2 10.755c0 2.766 1.455 5.234 3.737 6.815l-.97 3.32a.75.75 0 0 0 .942.923l3.87-1.425c.78.243 1.58.373 2.421.373 5.523 0 10-3.92 10-8.756C22 5.92 17.523 2 12 2z" fill="#0068FF"/>
+        <path d="M8.2 8.5h4.6l-3.6 5.8h3.8" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span>Zalo</span>
+    </a>
+  </aside>
+
+  <!-- ═══════════════════════════════════════
+       MOBILE NAVBAR
+  ═══════════════════════════════════════ -->
+  <header class="mobile-navbar" role="banner">
+    <div class="mobile-nav-inner">
+      <a href="#" class="mobile-logo" aria-label="DABBIT STUDIO">DABBIT</a>
+
+      <!-- Góc phải trên cùng: Phone + Zalo + Menu -->
+      <div class="mobile-nav-right">
+        <div class="mobile-nav-contacts">
+          <a href="tel:0857170905" class="top-nav-btn top-nav-phone" title="Gọi hotline 0857 170 905" aria-label="Gọi hotline 0857 170 905">
+            <span class="btn-live-dot" aria-hidden="true"></span>
+            <svg class="contact-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+            </svg>
+            <span class="top-nav-phone-num">0857 170 905</span>
+          </a>
+          <a href="https://zalo.me/0857170905" target="_blank" rel="noopener noreferrer" class="top-nav-btn top-nav-zalo" title="Chat Zalo 0857 170 905" aria-label="Chat Zalo">
+            <svg class="contact-icon zalo-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 2C6.477 2 2 5.92 2 10.755c0 2.766 1.455 5.234 3.737 6.815l-.97 3.32a.75.75 0 0 0 .942.923l3.87-1.425c.78.243 1.58.373 2.421.373 5.523 0 10-3.92 10-8.756C22 5.92 17.523 2 12 2z" fill="#0068FF"/>
+              <path d="M8.2 8.5h4.6l-3.6 5.8h3.8" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>Zalo</span>
+          </a>
+        </div>
+        <button class="hamburger" id="hamburger-btn" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Fullscreen Menu -->
+  <div class="mobile-menu" id="mobile-menu" role="dialog" aria-modal="true" aria-label="Mobile navigation">
+    <button class="mobile-menu-close" id="mobile-menu-close" aria-label="Close navigation menu">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <nav aria-label="Mobile navigation links">
+      <ul>
+        <li><a href="#story" class="mobile-nav-link">Giới thiệu</a></li>
+        <li><a href="#portfolio" class="mobile-nav-link">Portfolio</a></li>
+        <li><a href="#featured" class="mobile-nav-link">Dịch vụ</a></li>
+        <li><a href="#pricing" class="mobile-nav-link">Bảng giá</a></li>
+        <li><a href="#footer" class="mobile-nav-link">Liên hệ</a></li>
+      </ul>
+    </nav>
+    <div class="mobile-menu-footer-contact">
+      <span class="mobile-menu-contact-label">HỖ TRỢ TRỰC TIẾP</span>
+      <div class="mobile-menu-btns">
+        <a href="tel:0857170905" class="top-nav-btn top-nav-phone" aria-label="Gọi hotline">
+          <span class="btn-live-dot"></span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+          </svg>
+          <span>0857 170 905</span>
+        </a>
+        <a href="https://zalo.me/0857170905" target="_blank" rel="noopener noreferrer" class="top-nav-btn top-nav-zalo" aria-label="Zalo">
+          <svg class="contact-icon zalo-icon" width="15" height="15" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2C6.477 2 2 5.92 2 10.755c0 2.766 1.455 5.234 3.737 6.815l-.97 3.32a.75.75 0 0 0 .942.923l3.87-1.425c.78.243 1.58.373 2.421.373 5.523 0 10-3.92 10-8.756C22 5.92 17.523 2 12 2z" fill="#0068FF"/>
+            <path d="M8.2 8.5h4.6l-3.6 5.8h3.8" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Chat Zalo</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       ALBUM LIGHTBOX MODAL
+  ═══════════════════════════════════════ -->
+  <div class="album-modal" id="album-modal" role="dialog" aria-modal="true" aria-label="Album gallery">
+    <div class="album-modal-backdrop" id="album-modal-backdrop"></div>
+    <div class="album-modal-panel">
+      <div class="album-modal-header">
+        <div class="album-modal-title-wrap">
+          <span class="album-modal-label">ALBUM</span>
+          <h2 class="album-modal-title" id="album-modal-title">Tất cả</h2>
+        </div>
+        <button class="album-modal-close" id="album-modal-close" aria-label="Đóng album">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="album-modal-grid" id="album-modal-grid"></div>
+    </div>
+    <!-- Full-size viewer -->
+    <div class="album-viewer" id="album-viewer">
+      <button class="album-viewer-close" id="album-viewer-close" aria-label="Đóng ảnh">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <button class="album-viewer-prev" id="album-viewer-prev" aria-label="Ảnh trước">←</button>
+      <img class="album-viewer-img" id="album-viewer-img" src="" alt="" />
+      <button class="album-viewer-next" id="album-viewer-next" aria-label="Ảnh sau">→</button>
+      <div class="album-viewer-counter" id="album-viewer-counter">1 / 1</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       FEATURED STORY FULL-SCREEN GALLERY
+  ═══════════════════════════════════════ -->
+  <div class="story-gallery-modal" id="story-gallery-modal" role="dialog" aria-modal="true" aria-label="Featured story gallery">
+    <div class="story-gallery-backdrop" id="story-gallery-backdrop"></div>
+    <div class="story-gallery-wrapper">
+      
+      <!-- Top Bar / Header -->
+      <div class="story-gallery-header">
+        <div class="story-gallery-info">
+          <span class="story-gallery-tag" id="story-gallery-tag">PORTRAIT</span>
+          <h3 class="story-gallery-title" id="story-gallery-title">Thanh xuân trong nắng</h3>
+        </div>
+        <div class="story-gallery-top-right">
+          <div class="story-gallery-counter" id="story-gallery-counter">01 / 08</div>
+          <button class="story-gallery-close" id="story-gallery-close" aria-label="Đóng thư viện">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Center Stage with One Large Image -->
+      <div class="story-gallery-stage" id="story-gallery-stage">
+        <button class="story-gallery-arrow story-gallery-prev" id="story-gallery-prev" aria-label="Ảnh trước">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+
+        <div class="story-gallery-img-container" id="story-gallery-img-container">
+          <img class="story-gallery-img" id="story-gallery-img" src="" alt="" />
+        </div>
+
+        <button class="story-gallery-arrow story-gallery-next" id="story-gallery-next" aria-label="Ảnh sau">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Bottom Hint / Controls Bar -->
+      <div class="story-gallery-footer">
+        <span class="story-gallery-hint">Vuốt sang trái / phải trên điện thoại hoặc dùng phím ← → để chuyển ảnh</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       MAIN CONTENT
+  ═══════════════════════════════════════ -->
+  <main class="main-content" id="main-content">
+
+    <!-- ─── HERO ─────────────────────────── -->
+    <section class="hero" id="hero" aria-label="Hero section">
+
+      <!-- Background image slot (multi-slide for swipe & transitions) -->
+      <div class="hero-image-slot" id="hero-image-slot" role="region" aria-label="Hero background slider">
+        <div class="hero-slide active" data-index="0">
+          <img src="anh/couple/optimized/IMG_1365.JPG" alt="DABBIT STUDIO photography - Áo dài nghệ thuật" class="hero-img" id="hero-bg-img" loading="eager" />
+        </div>
+        <div class="hero-slide" data-index="1">
+          <img src="anh/couple/optimized/IMG_1366.JPG" alt="DABBIT STUDIO photography - Khoảnh khắc đôi" class="hero-img" loading="lazy" />
+        </div>
+        <div class="hero-slide" data-index="2">
+          <img src="anh/couple/optimized/IMG_1372.jpeg" alt="DABBIT STUDIO photography - Kỷ niệm thanh xuân" class="hero-img" loading="lazy" />
+        </div>
+      </div>
+
+      <!-- Gradient overlay -->
+      <div class="hero-overlay" aria-hidden="true"></div>
+
+      <!-- Hero content -->
+      <div class="hero-content">
+        <p class="section-label hero-label reveal">DABBIT STUDIO</p>
+        <h1 class="hero-title reveal">
+          Photography<br>
+          <span class="hero-ampersand">&</span> Memories.
+        </h1>
+        <p class="hero-subtitle reveal">
+          Những khoảnh khắc đẹp không chỉ để nhìn lại<br class="br-desktop" />
+          mà để cảm nhận lại.
+        </p>
+        <a href="#portfolio" class="btn-primary reveal" aria-label="Explore portfolio">
+          KHÁM PHÁ PORTFOLIO <span class="btn-arrow">→</span>
+        </a>
+      </div>
+
+      <!-- Hero navigation arrows -->
+      <button class="hero-nav-arrow hero-nav-prev" id="hero-nav-prev" aria-label="Ảnh trước">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
+      <button class="hero-nav-arrow hero-nav-next" id="hero-nav-next" aria-label="Ảnh kế tiếp">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
+
+      <!-- Right thumbnail gallery (Desktop) -->
+      <div class="hero-thumbs" aria-label="Hero gallery thumbnails">
+        <div class="hero-thumb-item reveal active" data-src="anh/couple/optimized/IMG_1365.JPG" tabindex="0" role="button" aria-label="Chọn ảnh 01">
+          <div class="thumb-slot" role="img" aria-label="Hero thumbnail 1">
+            <img src="anh/couple/optimized/IMG_1365.JPG" alt="Couple photography sample 1" loading="eager" />
+            <div class="thumb-placeholder-label">IMAGE</div>
+          </div>
+          <div class="thumb-meta">
+            <span class="thumb-line" aria-hidden="true"></span>
+            <span class="thumb-num">01</span>
+          </div>
+        </div>
+        <div class="hero-thumb-item reveal" data-src="anh/couple/optimized/IMG_1366.JPG" tabindex="0" role="button" aria-label="Chọn ảnh 02">
+          <div class="thumb-slot" role="img" aria-label="Hero thumbnail 2">
+            <img src="anh/couple/optimized/IMG_1366.JPG" alt="Couple photography sample 2" loading="lazy" />
+            <div class="thumb-placeholder-label">IMAGE</div>
+          </div>
+          <div class="thumb-meta">
+            <span class="thumb-line" aria-hidden="true"></span>
+            <span class="thumb-num">02</span>
+          </div>
+        </div>
+        <div class="hero-thumb-item reveal" data-src="anh/couple/optimized/IMG_1372.jpeg" tabindex="0" role="button" aria-label="Chọn ảnh 03">
+          <div class="thumb-slot" role="img" aria-label="Hero thumbnail 3">
+            <img src="anh/couple/optimized/IMG_1372.jpeg" alt="Couple photography sample 3" loading="lazy" />
+            <div class="thumb-placeholder-label">IMAGE</div>
+          </div>
+          <div class="thumb-meta">
+            <span class="thumb-line" aria-hidden="true"></span>
+            <span class="thumb-num">03</span>
+          </div>
+        </div>
+      </div>
+
+    </section><!-- /hero -->
+
+    <!-- ─── OUR STORY ─────────────────────── -->
+    <section class="story" id="story" aria-label="Our story section">
+      <div class="section-inner story-grid">
+
+        <!-- Left: Text -->
+        <div class="story-text">
+          <p class="section-label reveal">OUR STORY</p>
+          <h2 class="story-title reveal">
+            Mỗi bức ảnh là<br>
+            một ký ức được giữ lại.
+          </h2>
+          <p class="story-body reveal">
+            DABBIT Studio theo đuổi phong cách ảnh nhẹ nhàng,
+            tự nhiên và giàu cảm xúc. Chúng tôi tin rằng mỗi người
+            đều có những câu chuyện đẹp, và nhiếp ảnh là cách
+            tuyệt vời nhất để lưu giữ những câu chuyện đó.
+          </p>
+          <a href="#footer" class="text-link reveal" aria-label="Learn more about DABBIT Studio">
+            Khám phá về DABBIT <span class="btn-arrow">→</span>
+          </a>
+        </div>
+
+        <!-- Right: Images (4 portrait photos in 2x2 layout, preserving exact 2:3 ratio) -->
+        <div class="story-visuals">
+          <div class="story-img-item reveal" role="img" aria-label="DABBIT STUDIO story photo 1">
+            <img src="anh/optimized/IMG_1254.JPG" alt="DABBIT STUDIO photography story 1" loading="lazy" />
+            <div class="img-placeholder-label">IMAGE</div>
+          </div>
+          <div class="story-img-item reveal" role="img" aria-label="DABBIT STUDIO story photo 2">
+            <img src="anh/optimized/IMG_1258.JPG" alt="DABBIT STUDIO photography story 2" loading="lazy" />
+            <div class="img-placeholder-label">IMAGE</div>
+          </div>
+          <div class="story-img-item reveal" role="img" aria-label="DABBIT STUDIO story photo 3">
+            <img src="anh/optimized/IMG_1259.JPG" alt="DABBIT STUDIO photography story 3" loading="lazy" />
+            <div class="img-placeholder-label">IMAGE</div>
+          </div>
+          <div class="story-img-item reveal" role="img" aria-label="DABBIT STUDIO story photo 4">
+            <img src="anh/optimized/IMG_1347.JPG" alt="DABBIT STUDIO photography story 4" loading="lazy" />
+            <div class="img-placeholder-label">IMAGE</div>
+          </div>
+        </div>
+
+      </div>
+    </section><!-- /story -->
+
+    <!-- ─── FEATURED STORIES ──────────────── -->
+    <section class="featured" id="featured" aria-label="Featured stories section">
+      <div class="section-inner">
+
+        <div class="featured-header">
+          <p class="section-label reveal">FEATURED STORIES</p>
+          <div class="featured-nav" aria-label="Featured stories navigation">
+            <button class="feat-nav-btn" id="feat-prev" aria-label="Previous featured story">←</button>
+            <button class="feat-nav-btn" id="feat-next" aria-label="Next featured story">→</button>
+          </div>
+        </div>
+
+        <div class="featured-track-wrap">
+          <div class="featured-track" id="featured-track">
+
+            <article class="feat-card reveal" aria-label="Featured story 1: Portrait" data-story="couple" data-cat="PORTRAIT" data-num="01" data-title="Thanh xuân trong nắng">
+              <div class="feat-img-slot" role="img" aria-label="Portrait photography featured">
+                <img src="anh/couple/optimized/IMG_1365.JPG" alt="Portrait – Thanh xuân trong nắng" loading="lazy" />
+                <div class="img-placeholder-label">IMAGE</div>
+              </div>
+              <div class="feat-card-overlay" aria-hidden="true"></div>
+              <div class="feat-card-content">
+                <span class="feat-num">01</span>
+                <span class="feat-category">PORTRAIT</span>
+                <h3 class="feat-title">Thanh xuân trong nắng</h3>
+                <a href="#" class="feat-link" data-story="couple" aria-label="View Portrait story">Xem thêm <span class="btn-arrow">→</span></a>
+              </div>
+            </article>
+
+            <article class="feat-card reveal" aria-label="Featured story 2: Graduation" data-story="ki-yeu" data-cat="GRADUATION" data-num="02" data-title="Những năm tháng chúng ta">
+              <div class="feat-img-slot" role="img" aria-label="Graduation photography featured">
+                <img src="anh/tot nghiep/optimized/IMG_3632.JPG" alt="Graduation – Những năm tháng chúng ta" loading="lazy" />
+                <div class="img-placeholder-label">IMAGE</div>
+              </div>
+              <div class="feat-card-overlay" aria-hidden="true"></div>
+              <div class="feat-card-content">
+                <span class="feat-num">02</span>
+                <span class="feat-category">GRADUATION</span>
+                <h3 class="feat-title">Những năm tháng chúng ta</h3>
+                <a href="#" class="feat-link" data-story="ki-yeu" aria-label="View Graduation story">Xem thêm <span class="btn-arrow">→</span></a>
+              </div>
+            </article>
+
+            <article class="feat-card reveal" aria-label="Featured story 3: Traditional" data-story="tet" data-cat="TRADITIONAL" data-num="03" data-title="Lưu giữ nét Việt">
+              <div class="feat-img-slot" role="img" aria-label="Traditional photography featured">
+                <img src="anh/tet/optimized/DSC09271.JPEG" alt="Traditional – Lưu giữ nét Việt" loading="lazy" />
+                <div class="img-placeholder-label">IMAGE</div>
+              </div>
+              <div class="feat-card-overlay" aria-hidden="true"></div>
+              <div class="feat-card-content">
+                <span class="feat-num">03</span>
+                <span class="feat-category">TRADITIONAL</span>
+                <h3 class="feat-title">Lưu giữ nét Việt</h3>
+                <a href="#" class="feat-link" data-story="tet" aria-label="View Traditional story">Xem thêm <span class="btn-arrow">→</span></a>
+              </div>
+            </article>
+
+          </div>
+        </div>
+
+      </div>
+    </section><!-- /featured -->
+
+    <!-- ─── PORTFOLIO ─────────────────────── -->
+    <section class="portfolio" id="portfolio" aria-label="Portfolio section">
+      <div class="section-inner">
+
+        <div class="portfolio-header">
+          <div class="portfolio-header-left">
+            <p class="section-label reveal">PORTFOLIO</p>
+            <h2 class="portfolio-title reveal">
+              Những album<br>
+              ảnh chúng tôi đã thực hiện.
+            </h2>
+          </div>
+          <div class="portfolio-header-right">
+            <nav class="portfolio-filters" aria-label="Portfolio filters" role="navigation">
+              <button class="filter-btn active" data-filter="all" aria-pressed="true">Tất cả</button>
+              <button class="filter-btn" data-filter="couple" aria-pressed="false">Couple</button>
+              <button class="filter-btn" data-filter="tet" aria-pressed="false">Tết</button>
+              <button class="filter-btn" data-filter="ki-yeu" aria-pressed="false">Kỉ yếu</button>
+            </nav>
+          </div>
+        </div>
+
+        <!-- Editorial Masonry Grid -->
+        <div class="portfolio-grid" id="portfolio-grid" aria-label="Portfolio photography grid">
+
+          <!-- ═══ COUPLE (Ngang trước, Dọc sau) ═══ -->
+          <div class="port-item port-wide reveal" data-category="couple" role="img" aria-label="Couple wide photography">
+            <img src="anh/couple/optimized/IMG_5018.JPG" alt="Couple photography" loading="lazy" />
+            <div class="port-overlay" aria-hidden="true">
+              <span class="port-category-label">Couple</span>
+              <span class="port-arrow" aria-hidden="true">↗</span>
+            </div>
+          </div>
+
+          <div class="port-item port-portrait reveal" data-category="couple" role="img" aria-label="Couple photography 1">
+            <img src="anh/couple/optimized/IMG_3024.JPG" alt="Couple photography" loading="lazy" />
+            <div class="port-overlay" aria-hidden="true">
+              <span class="port-category-label">Couple</span>
+              <span class="port-arrow" aria-hidden="true">↗</span>
+            </div>
+          </div>
+
+          <div class="port-item port-portrait reveal" data-category="couple" role="img" aria-label="Couple photography 2">
+            <img src="anh/couple/optimized/IMG_4968.JPG" alt="Couple photography" loading="lazy" />
+            <div class="port-overlay" aria-hidden="true">
+              <span class="port-category-label">Couple</span>
+              <span class="port-arrow" aria-hidden="true">↗</span>
+            </div>
+          </div>
+
+          <!-- ═══ TẾT (Ngang trước, Dọc sau) ═══ -->
+          <div class="port-item port-wide reveal" data-category="tet" role="img" aria-label="Tết landscape photography">
+            <img src="anh/tet/optimized/IMG_2867.jpeg" alt="Tết photography" loading="lazy" />
+            <div class="port-overlay" aria-hidden="true">
+              <span class="port-arrow" aria-hidden="true">↗</span>
+            </div>
+          </div>
+
+          <div class="port-item port-portrait reveal" data-category="tet" role="img" aria-label="Tết photography 1">
+            <img src="anh/tet/optimized/IMG_2905.JPG" alt="Tết photography" loading="lazy" />
+            <div class="port-overlay" aria-hidden="true">
+              <span class="port-category-label">Tết</span>
+              <span class="port-arrow" aria-hidden="true">↗</span>
+            </div>
+          </div>
+
+          <div class="port-item port-portrait reveal" data-category="tet" role="img" aria-label="Tết photography 2">
+            <img src="anh/tet/optimized/IMG_2868.jpeg" alt="Tết photography" loading="lazy" />
+            <div class="port-overlay" aria-hidden="true">
+              <span class="port-category-label">Tết</span>
+              <span class="port-arrow" aria-hidden="true">↗</span>
+            </div>
+          </div>
+
+          <!-- ═══ KỈ YẾU (Ngang trước, Dọc sau) ═══ -->
+          <div class="port-item port-wide reveal" data-category="ki-yeu" role="img" aria-label="Kỉ yếu wide photography">
+            <img src="anh/tot nghiep/optimized/IMG_3632.JPG" alt="Kỉ yếu photography" loading="lazy" />
+            <div class="port-overlay" aria-hidden="true">
+              <span class="port-category-label">Kỉ yếu</span>
+              <span class="port-arrow" aria-hidden="true">↗</span>
+            </div>
+          </div>
+
+          <div class="port-item port-portrait reveal" data-category="ki-yeu" role="img" aria-label="Kỉ yếu photography 1">
+            <img src="anh/tot nghiep/optimized/IMG_3658.JPG" alt="Kỉ yếu photography" loading="lazy" />
+            <div class="port-overlay" aria-hidden="true">
+              <span class="port-category-label">Kỉ yếu</span>
+              <span class="port-arrow" aria-hidden="true">↗</span>
+            </div>
+          </div>
+
+          <div class="port-item port-portrait reveal" data-category="ki-yeu" role="img" aria-label="Kỉ yếu photography 2">
+            <img src="anh/tot nghiep/optimized/IMG_4203.JPG" alt="Kỉ yếu photography" loading="lazy" />
+            <div class="port-overlay" aria-hidden="true">
+              <span class="port-category-label">Kỉ yếu</span>
+              <span class="port-arrow" aria-hidden="true">↗</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- /portfolio -->
+
+    <!-- ─── PRICING ───────────────────────── -->
+    <section class="pricing" id="pricing" aria-label="Pricing section">
+      <div class="section-inner">
+
+        <div class="pricing-header">
+          <div class="pricing-header-left">
+            <p class="section-label reveal">PRICING</p>
+            <h2 class="pricing-title reveal">
+              Chọn câu chuyện bạn<br>
+              muốn lưu giữ.
+            </h2>
+          </div>
+          <div class="pricing-header-right reveal">
+            <a href="#footer" class="text-link" aria-label="Liên hệ để biết thêm chi tiết">
+              Liên hệ để biết thêm <span class="btn-arrow">→</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- 2 cột dịch vụ chính -->
+        <div class="pricing-two-col">
+
+          <!-- ── KỶ YẾU ── -->
+          <div class="pricing-service reveal" aria-label="Dịch vụ chụp kỷ yếu">
+            <div class="pricing-service-header">
+              <div class="pricing-icon" aria-hidden="true">
+                <!-- Graduation cap -->
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+              </div>
+              <div>
+                <h3 class="pricing-name">Kỷ yếu</h3>
+                <p class="pricing-tagline">Chỉnh 15 ảnh/người · Nhận full file</p>
+              </div>
+            </div>
+
+            <div class="pricing-packages">
+              <div class="pricing-pkg">
+                <div class="pricing-pkg-left">
+                  <span class="pkg-label">1 người · 1 ngày</span>
+                </div>
+                <span class="pkg-price">1.500.000đ</span>
+              </div>
+              <div class="pricing-pkg">
+                <div class="pricing-pkg-left">
+                  <span class="pkg-label">2 người · 1 ngày</span>
+                </div>
+                <span class="pkg-price">2.000.000đ</span>
+              </div>
+              <div class="pricing-pkg">
+                <div class="pricing-pkg-left">
+                  <span class="pkg-label">3 người · 1 buổi</span>
+                </div>
+                <span class="pkg-price">2.000.000đ</span>
+              </div>
+              <div class="pricing-pkg">
+                <div class="pricing-pkg-left">
+                  <span class="pkg-label">3 người · 1 ngày</span>
+                </div>
+                <span class="pkg-price">2.600.000đ</span>
+              </div>
+            </div>
+
+            <p class="pricing-note">
+              * Chưa bao gồm phí đi lại.<br>
+              * Bill từ 2 triệu → miễn phí di chuyển.
+            </p>
+
+            <a href="#footer" class="btn-outline" aria-label="Liên hệ chụp kỷ yếu">ĐẶT LỊCH NGAY</a>
+          </div>
+
+          <div class="pricing-v-sep" aria-hidden="true"></div>
+
+          <!-- ── TẾT ── -->
+          <div class="pricing-service reveal" aria-label="Dịch vụ chụp Tết">
+            <div class="pricing-service-header">
+              <div class="pricing-icon" aria-hidden="true">
+                <!-- Sparkle / star icon -->
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              </div>
+              <div>
+                <h3 class="pricing-name">Tết</h3>
+                <p class="pricing-tagline">90 phút chụp · 5 ảnh</p>
+              </div>
+            </div>
+
+            <div class="pricing-packages">
+              <div class="pricing-pkg">
+                <div class="pricing-pkg-left">
+                  <span class="pkg-label">Chụp đơn</span>
+                  <span class="pkg-sub">1 người · 90 phút · 5 ảnh</span>
+                </div>
+                <span class="pkg-price">399.000đ</span>
+              </div>
+              <div class="pricing-pkg">
+                <div class="pricing-pkg-left">
+                  <span class="pkg-label">Chụp + Make <em>(không kèm tóc)</em></span>
+                </div>
+                <span class="pkg-price">449.000đ</span>
+              </div>
+              <div class="pricing-pkg">
+                <div class="pricing-pkg-left">
+                  <span class="pkg-label">Chụp + Make <em>(kèm tóc)</em></span>
+                </div>
+                <span class="pkg-price">550.000đ</span>
+              </div>
+              <div class="pricing-pkg">
+                <div class="pricing-pkg-left">
+                  <span class="pkg-label">Chụp + Make + Trang phục</span>
+                </div>
+                <span class="pkg-price">650.000đ</span>
+              </div>
+              <div class="pricing-pkg pricing-pkg--addon">
+                <div class="pricing-pkg-left">
+                  <span class="pkg-label">Cặp đôi</span>
+                  <span class="pkg-sub">Phụ thu thêm</span>
+                </div>
+                <span class="pkg-price pkg-price--accent">+120.000đ</span>
+              </div>
+            </div>
+
+            <p class="pricing-note">
+              * Giá áp dụng cho dịp Tết.<br>
+              * Liên hệ để được tư vấn concept.
+            </p>
+
+            <a href="#footer" class="btn-outline btn-accent" aria-label="Liên hệ chụp Tết">LIÊN HỆ NGAY</a>
+          </div>
+
+        </div>
+
+        <!-- Botanical decoration -->
+        <div class="botanical-deco" aria-hidden="true">
+          <svg viewBox="0 0 200 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M100 280 C100 200 60 160 30 100" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+            <path d="M100 280 C100 200 140 160 170 100" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+            <path d="M100 240 C80 220 50 220 30 200" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+            <path d="M100 240 C120 220 150 220 170 200" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+            <path d="M100 200 C70 180 50 160 40 130" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+            <path d="M100 200 C130 180 150 160 160 130" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+            <ellipse cx="30" cy="98" rx="8" ry="5" stroke="rgba(255,255,255,0.05)" stroke-width="1" transform="rotate(-30 30 98)"/>
+            <ellipse cx="170" cy="98" rx="8" ry="5" stroke="rgba(255,255,255,0.05)" stroke-width="1" transform="rotate(30 170 98)"/>
+          </svg>
+        </div>
+
+      </div>
+    </section><!-- /pricing -->
+
+    <!-- ─── FINAL CTA ──────────────────────── -->
+    <section class="final-cta" id="cta" aria-label="Call to action section">
+      <div class="cta-image-slot" role="img" aria-label="CTA background image">
+        <img src="/images/cta.jpg" alt="Book a photography session with DABBIT STUDIO" loading="lazy" />
+        <div class="img-placeholder-label">IMAGE</div>
+      </div>
+      <div class="cta-overlay" aria-hidden="true"></div>
+      <div class="cta-content">
+        <p class="section-label cta-label reveal">LET'S CREATE</p>
+        <h2 class="cta-title reveal">
+          Something<br>
+          <em>Beautiful.</em>
+        </h2>
+        <p class="cta-subtitle reveal">
+          Bạn đã sẵn sàng lưu giữ câu chuyện của mình?
+        </p>
+        <div class="cta-actions reveal">
+          <a href="tel:0857170905" class="btn-primary" aria-label="Gọi đặt lịch chụp">
+            📞 0857 170 905
+          </a>
+          <a href="https://m.me/thoriuoi17951035" target="_blank" rel="noopener" class="btn-secondary" aria-label="Nhắn tin đặt lịch">
+            ĐẶT LỊCH QUA MESSENGER <span class="btn-arrow">→</span>
+          </a>
+        </div>
+      </div>
+    </section><!-- /cta -->
+
+    <!-- ─── FOOTER ─────────────────────────── -->
+    <footer class="footer" id="footer" aria-label="Site footer">
+      <div class="footer-inner">
+
+        <div class="footer-left">
+          <p class="footer-brand" aria-label="DABBIT STUDIO">DABBIT STUDIO</p>
+          <p class="footer-tagline">
+            Ảnh xinh là tiêu chuẩn,<br>
+            không phải may mắn.
+          </p>
+        </div>
+
+        <div class="footer-sep" aria-hidden="true"></div>
+
+        <div class="footer-socials">
+          <a href="https://www.facebook.com/thoriuoi17951035/" class="social-link" aria-label="DABBIT STUDIO Facebook" target="_blank" rel="noopener">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+        </div>
+
+        <div class="footer-sep" aria-hidden="true"></div>
+
+        <nav class="footer-nav" aria-label="Footer navigation">
+          <a href="#story">Giới thiệu</a>
+          <a href="#portfolio">Portfolio</a>
+          <a href="#featured">Dịch vụ</a>
+          <a href="#pricing">Bảng giá</a>
+          <a href="#footer">Liên hệ</a>
+        </nav>
+
+      </div>
+    </footer>
+
+  </main><!-- /main-content -->
+
+  <script src="script.js"></script>
+
+  <!-- ═══════════════════════════════════════
+       MESSENGER FLOATING BUTTON
+  ═══════════════════════════════════════ -->
+  <a
+    href="https://m.me/thoriuoi17951035"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="messenger-fab"
+    id="messenger-fab"
+    aria-label="Liên hệ qua Messenger"
+    title="Nhắn tin qua Messenger"
+  >
+    <!-- Messenger Icon SVG -->
+    <svg class="messenger-fab-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 2C6.477 2 2 6.145 2 11.243c0 2.938 1.446 5.565 3.722 7.29V22l3.388-1.87C10.07 20.37 11.017 20.5 12 20.5c5.523 0 10-4.145 10-9.257C22 6.145 17.523 2 12 2zm1.007 12.456l-2.548-2.717-4.971 2.717 5.469-5.806 2.611 2.717 4.908-2.717-5.469 5.806z"/>
+    </svg>
+
+    <!-- Tooltip label -->
+    <span class="messenger-fab-label">Nhắn tin với tôi</span>
+
+    <!-- Pulse ring animation -->
+    <span class="messenger-fab-pulse"></span>
+  </a>
+
+</body>
+</html>
