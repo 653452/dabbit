@@ -49,6 +49,24 @@ const IMAGES = {
 
   if (!heroSection || !slides.length) return;
 
+  // Khóa chiều cao hero trên mobile để tránh thanh URL trình duyệt co giãn làm zoom ảnh nền khi lướt xuống
+  function lockMobileHeroHeight() {
+    if (window.innerWidth <= 768) {
+      const fixedH = Math.max(520, Math.round(window.innerHeight * 0.88));
+      heroSection.style.height = fixedH + 'px';
+      heroSection.style.minHeight = fixedH + 'px';
+      heroSection.style.maxHeight = fixedH + 'px';
+    } else {
+      heroSection.style.height = '';
+      heroSection.style.minHeight = '';
+      heroSection.style.maxHeight = '';
+    }
+  }
+  lockMobileHeroHeight();
+  window.addEventListener('orientationchange', () => {
+    setTimeout(lockMobileHeroHeight, 200);
+  });
+
   const totalSlides = slides.length;
   let currentIndex = 0;
   let autoTimer = null;
