@@ -603,6 +603,7 @@ const IMAGES = {
   /* ── 2. DOM refs ── */
   const modal        = document.getElementById('album-modal');
   const backdrop     = document.getElementById('album-modal-backdrop');
+  const modalPanel   = modal ? modal.querySelector('.album-modal-panel') : null;
   const closeBtn     = document.getElementById('album-modal-close');
   const modalTitle   = document.getElementById('album-modal-title');
   const grid         = document.getElementById('album-modal-grid');
@@ -613,16 +614,47 @@ const IMAGES = {
   const viewerNext   = document.getElementById('album-viewer-next');
   const viewerCounter= document.getElementById('album-viewer-counter');
 
+  // PC single-image view refs
+  const pcSingleView = document.getElementById('album-pc-single-view');
+  const pcImg        = document.getElementById('album-pc-img');
+  const pcPrev       = document.getElementById('album-pc-prev');
+  const pcNext       = document.getElementById('album-pc-next');
+  const pcThumbs     = document.getElementById('album-pc-thumbs');
+  const pcCounter    = document.getElementById('album-pc-counter');
+  const modeSingleBtn= document.getElementById('album-mode-single');
+  const modeListBtn  = document.getElementById('album-mode-list');
+
   if (!modal || !grid) return;
 
   let currentImages = [];
   let currentViewerIndex = 0;
+  let currentPcIndex = 0;
+  let pcViewMode = 'single'; // 'single' by default on PC
 
   /* ── 3. Open / Close modal ── */
-  function openModal(filter) {
+  function openModal(filter, initialImgSrc) {
     const data = ALBUM_DATA[filter] || ALBUM_DATA.all;
     modalTitle.textContent = data.title;
-    renderGrid(data.images);
+    currentImages = data.images || [];
+
+    // Render feed for mobile & PC list mode
+    renderGrid(currentImages);
+
+    // Starting index for PC single view
+    if (initialImgSrc && currentImages.length > 0) {
+      const matchIdx = currentImages.findIndex(s => s === initialImgSrc || s.endsWith(initialImgSrc.split('/').pop()));
+      currentPcIndex = matchIdx >= 0 ? matchIdx : 0;
+    } else {
+      currentPcIndex = 0;
+    }
+
+    // Render PC single-image view and thumbnail strip
+    if (currentImages.length > 0) {
+      renderPcThumbs();
+      setPcImage(currentPcIndex, true);
+    }
+    setPcViewMode('single');
+
     modal.classList.add('open');
     document.body.style.overflow = 'hidden';
   }
@@ -633,9 +665,8 @@ const IMAGES = {
     document.body.style.overflow = '';
   }
 
-  /* ── 4. Render grid ── */
+  /* ── 4. Render grid (Mobile feed & PC list mode) ── */
   function renderGrid(images) {
-    currentImages = images;
     grid.innerHTML = '';
 
     if (!images || images.length === 0) {
@@ -669,25 +700,106 @@ const IMAGES = {
       item.appendChild(img);
       item.appendChild(overlay);
 
-      item.addEventListener('click', () => openViewer(idx));
-      item.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openViewer(idx); }
-      });
+      const handleItemClick = () => {
+        if (window.innerWidth >= 1025) {
+          // On PC: switch to single-image mode at this photo
+          setPcImage(idx);
+          setPcViewMode('single');
+        } else {
+          // On Mobile: open full-size viewer
+          openViewer(idx);
+        }
+      };
 
-      // Stagger animation
-      item.style.opacity = '0';
-      item.style.transform = 'translateY(16px)';
-      item.style.transition = `opacity 0.4s ease ${idx * 40}ms, transform 0.4s ease ${idx * 40}ms`;
-      setTimeout(() => {
-        item.style.opacity = '1';
-        item.style.transform = 'translateY(0)';
-      }, 50);
+      item.addEventListener('click', handleItemClick);
+      item.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleItemClick(); }
+      });
 
       grid.appendChild(item);
     });
   }
 
-  /* ── 5. Viewer ── */
+  /* ── 5. PC Single-Image View Controls ── */
+  function setPcImage(idx, immediate = false) {
+    if (!currentImages || currentImages.length === 0) return;
+    currentPcIndex = (idx + currentImages.length) % currentImages.length;
+
+    if (pcImg) {
+      if (immediate) {
+        pcImg.src = currentImages[currentPcIndex];
+        pcImg.classList.remove('switching');
+      } else {
+        pcImg.classList.add('switching');
+        setTimeout(() => {
+          pcImg.src = currentImages[currentPcIndex];
+          pcImg.classList.remove('switching');
+        }, 150);
+      }
+    }
+
+    // Counter
+    if (pcCounter) {
+      const cur = String(currentPcIndex + 1).padStart(2, '0');
+      const tot = String(currentImages.length).padStart(2, '0');
+      pcCounter.textContent = `${cur} / ${tot}`;
+    }
+
+    // Update active thumb
+    if (pcThumbs) {
+      const thumbEls = pcThumbs.querySelectorAll('.album-pc-thumb-item');
+      thumbEls.forEach((thumb, i) => {
+        if (i === currentPcIndex) {
+          thumb.classList.add('active');
+          thumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        } else {
+          thumb.classList.remove('active');
+        }
+      });
+    }
+  }
+
+  function renderPcThumbs() {
+    if (!pcThumbs) return;
+    pcThumbs.innerHTML = '';
+    currentImages.forEach((src, idx) => {
+      const thumb = document.createElement('button');
+      thumb.type = 'button';
+      thumb.className = `album-pc-thumb-item ${idx === currentPcIndex ? 'active' : ''}`;
+      thumb.setAttribute('aria-label', `Chọn ảnh ${idx + 1}`);
+
+      const img = document.createElement('img');
+      img.src = src;
+      img.alt = `Thumb ${idx + 1}`;
+      img.loading = 'lazy';
+
+      thumb.appendChild(img);
+      thumb.addEventListener('click', () => setPcImage(idx));
+      pcThumbs.appendChild(thumb);
+    });
+  }
+
+  function setPcViewMode(mode) {
+    pcViewMode = mode;
+    if (modalPanel) {
+      if (mode === 'list') {
+        modalPanel.classList.add('mode-list');
+      } else {
+        modalPanel.classList.remove('mode-list');
+      }
+    }
+    if (modeSingleBtn && modeListBtn) {
+      if (mode === 'list') {
+        modeListBtn.classList.add('active');
+        modeSingleBtn.classList.remove('active');
+      } else {
+        modeSingleBtn.classList.add('active');
+        modeListBtn.classList.remove('active');
+      }
+    }
+  }
+
+  /* ── 6. Mobile Viewer ── */
   function openViewer(idx) {
     currentViewerIndex = idx;
     viewerImg.src = currentImages[idx];
@@ -715,23 +827,33 @@ const IMAGES = {
     viewerCounter.textContent = `${currentViewerIndex + 1} / ${currentImages.length}`;
   }
 
-  /* ── 6. Event listeners ── */
-  // Portfolio grid items – click ảnh mở album của category đó
+  /* ── 7. Event listeners ── */
+  // Portfolio grid items – click ảnh mở album
   document.querySelectorAll('.port-item').forEach(item => {
     if (item.dataset.noModal === 'true') return; // chỉ hiển thị ảnh, không mở album
     item.style.cursor = 'pointer';
     item.addEventListener('click', () => {
       const category = item.dataset.category || 'all';
-      openModal(category);
+      const img = item.querySelector('img');
+      const src = img ? img.getAttribute('src') : null;
+      openModal(category, src);
     });
   });
 
-  // Close
+  // Modal Close
   closeBtn.addEventListener('click', closeModal);
   backdrop.addEventListener('click', closeModal);
   viewerClose.addEventListener('click', closeViewer);
 
-  // Viewer navigation
+  // PC Single view navigation
+  if (pcPrev) pcPrev.addEventListener('click', () => setPcImage(currentPcIndex - 1));
+  if (pcNext) pcNext.addEventListener('click', () => setPcImage(currentPcIndex + 1));
+
+  // PC Mode switchers
+  if (modeSingleBtn) modeSingleBtn.addEventListener('click', () => setPcViewMode('single'));
+  if (modeListBtn) modeListBtn.addEventListener('click', () => setPcViewMode('list'));
+
+  // Mobile Viewer navigation
   viewerPrev.addEventListener('click', () => navigateViewer(-1));
   viewerNext.addEventListener('click', () => navigateViewer(+1));
 
@@ -745,6 +867,9 @@ const IMAGES = {
     if (viewer.classList.contains('open')) {
       if (e.key === 'ArrowLeft') navigateViewer(-1);
       if (e.key === 'ArrowRight') navigateViewer(+1);
+    } else if (window.innerWidth >= 1025 && pcViewMode === 'single') {
+      if (e.key === 'ArrowLeft') setPcImage(currentPcIndex - 1);
+      if (e.key === 'ArrowRight') setPcImage(currentPcIndex + 1);
     }
   });
 })();
@@ -1012,4 +1137,467 @@ const IMAGES = {
     }, { passive: true });
   }
 })();
+
+/* ───────────────────────────────────────────────────
+   GOOGLE CALENDAR AVAILABILITY INTEGRATION
+─────────────────────────────────────────────────── */
+(function initAvailabilityCalendar() {
+  const calMonthTitle = document.getElementById('cal-month-title');
+  const calDaysGrid   = document.getElementById('cal-days');
+  const calPrevBtn    = document.getElementById('cal-prev');
+  const calNextBtn    = document.getElementById('cal-next');
+  const calTodayBtn   = document.getElementById('cal-today-btn');
+
+  const infoBadge     = document.getElementById('cal-info-badge');
+  const infoStatus    = document.getElementById('cal-info-status');
+  const infoDayName   = document.getElementById('cal-info-dayname');
+  const infoDateStr   = document.getElementById('cal-info-datestr');
+  const infoDesc      = document.getElementById('cal-info-desc');
+  const bookBtn       = document.getElementById('cal-book-btn');
+
+  // Khung giờ bận
+  const slotsCount    = document.getElementById('cal-slots-count');
+  const slotsList     = document.getElementById('cal-slots-list');
+
+  if (!calDaysGrid || !calMonthTitle) return;
+
+  /**
+   * CẤU HÌNH GOOGLE CALENDAR
+   * 1. calendarId: Email hoặc ID lịch Google của bạn (ví dụ: dabbitphoto@gmail.com)
+   * 2. apiKey: Google Cloud API Key (miễn phí tại https://console.cloud.google.com)
+   * 3. Khi chưa nhập API Key, hệ thống tự động sinh ngày bận mẫu để hiển thị ngay!
+   */
+  const VN_TIMEZONE = 'Asia/Ho_Chi_Minh';
+
+  const GOOGLE_CALENDAR_CONFIG = {
+    // Có thể điền 1 email hoặc nhiều email ngăn cách bởi dấu phẩy
+    calendarId: 'nguyenphuongthao2005qn@gmail.com', // Nhập Calendar ID tại đây
+    apiKey: 'AIzaSyBOVNQzmRyxKsZdMvMQn-gF8mBX_OPA9r4',     // Nhập Google API Key tại đây
+    fallbackBusyDates: [] // Danh sách ngày bận thủ công dạng ['YYYY-MM-DD']
+  };
+
+  // Lấy ngày hôm nay theo chuẩn múi giờ Việt Nam (Asia/Ho_Chi_Minh)
+  function getTodayVN() {
+    const now = new Date();
+    const parts = new Intl.DateTimeFormat('en-CA', {
+      timeZone: VN_TIMEZONE,
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit'
+    }).format(now);
+    const [y, m, d] = parts.split('-').map(Number);
+    return new Date(y, m - 1, d, 0, 0, 0, 0);
+  }
+
+  const today = getTodayVN();
+
+  let currentYear  = today.getFullYear();
+  let currentMonth = today.getMonth(); // 0-11
+  let selectedDate = new Date(today);
+
+  // Lưu trữ sự kiện theo ngày: { 'YYYY-MM-DD': [ { timeRange: '08:30 – 11:30', isAllDay: false, summary: '' } ] }
+  let eventsByDate = {};
+
+  const MONTH_NAMES = [
+    'Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4',
+    'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8',
+    'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'
+  ];
+
+  const DAY_NAMES = [
+    'Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư',
+    'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'
+  ];
+
+  function formatDateKey(d) {
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${y}-${m}-${day}`;
+  }
+
+  // Chuyển đổi mốc thời gian Google Calendar sang ngày YYYY-MM-DD theo giờ Việt Nam
+  function getVNDateKey(dateInput) {
+    const d = typeof dateInput === 'string' ? new Date(dateInput) : dateInput;
+    return new Intl.DateTimeFormat('en-CA', {
+      timeZone: VN_TIMEZONE,
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit'
+    }).format(d);
+  }
+
+  // Định dạng giờ:phút (HH:mm) theo múi giờ Việt Nam
+  function formatVNTime(dateInput) {
+    const d = typeof dateInput === 'string' ? new Date(dateInput) : dateInput;
+    return new Intl.DateTimeFormat('vi-VN', {
+      timeZone: VN_TIMEZONE,
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false
+    }).format(d);
+  }
+
+  // Fetch lịch từ Google Calendar API theo múi giờ Việt Nam (UTC+07:00)
+  async function loadBusyDates(year, month) {
+    eventsByDate = {};
+
+    let calIds = [];
+    if (Array.isArray(GOOGLE_CALENDAR_CONFIG.calendarId)) {
+      calIds = GOOGLE_CALENDAR_CONFIG.calendarId;
+    } else if (typeof GOOGLE_CALENDAR_CONFIG.calendarId === 'string') {
+      calIds = GOOGLE_CALENDAR_CONFIG.calendarId.split(',').map(s => s.trim()).filter(Boolean);
+    }
+
+    if (calIds.length === 0 || !GOOGLE_CALENDAR_CONFIG.apiKey) {
+      return;
+    }
+
+    try {
+      const monthStr = String(month + 1).padStart(2, '0');
+      const lastDay = new Date(year, month + 1, 0).getDate();
+      const lastDayStr = String(lastDay).padStart(2, '0');
+
+      // Giờ chuẩn Việt Nam (UTC+07:00) từ 00:00:00 đầu tháng đến 23:59:59 cuối tháng
+      const startOfMonth = `${year}-${monthStr}-01T00:00:00+07:00`;
+      const endOfMonth   = `${year}-${monthStr}-${lastDayStr}T23:59:59+07:00`;
+
+      // Hỗ trợ fetch từ 1 hoặc nhiều calendar cùng lúc
+      const fetchPromises = calIds.map(async (calId) => {
+        const encodedId = encodeURIComponent(calId);
+        const url = `https://www.googleapis.com/calendar/v3/calendars/${encodedId}/events?key=${GOOGLE_CALENDAR_CONFIG.apiKey}&timeMin=${encodeURIComponent(startOfMonth)}&timeMax=${encodeURIComponent(endOfMonth)}&timeZone=${encodeURIComponent(VN_TIMEZONE)}&singleEvents=true&orderBy=startTime&_t=${Date.now()}`;
+        const res = await fetch(url);
+        if (res.ok) {
+          const data = await res.json();
+          return data.items || [];
+        } else {
+          console.warn(`Google Calendar API [${calId}] trả về status:`, res.status);
+          return [];
+        }
+      });
+
+      const results = await Promise.all(fetchPromises);
+      const allItems = results.flat();
+
+      allItems.forEach(event => {
+        const startObj = event.start || {};
+        const endObj = event.end || {};
+
+        // 1. Sự kiện cả ngày (All-day event: startObj.date dạng YYYY-MM-DD)
+        if (startObj.date) {
+          const [sy, sm, sd] = startObj.date.split('-').map(Number);
+          let cur = new Date(sy, sm - 1, sd);
+          let endLimit;
+          if (endObj.date) {
+            const [ey, em, ed] = endObj.date.split('-').map(Number);
+            endLimit = new Date(ey, em - 1, ed); // Google Calendar end date cả ngày mang tính exclusive (loại trừ)
+          } else {
+            endLimit = new Date(sy, sm - 1, sd + 1);
+          }
+
+          if (endLimit <= cur) {
+            endLimit = new Date(cur);
+            endLimit.setDate(endLimit.getDate() + 1);
+          }
+
+          while (cur < endLimit) {
+            const key = formatDateKey(cur);
+            eventsByDate[key] = eventsByDate[key] || [];
+            const exists = eventsByDate[key].some(ev => ev.isAllDay);
+            if (!exists) {
+              eventsByDate[key].push({
+                timeRange: 'Cả ngày',
+                isAllDay: true,
+                summary: event.summary || 'Đã kín lịch'
+              });
+            }
+            cur.setDate(cur.getDate() + 1);
+          }
+        }
+        // 2. Sự kiện theo khung giờ (Timed event: quy đổi chính xác theo giờ Việt Nam)
+        else if (startObj.dateTime) {
+          const sDate = new Date(startObj.dateTime);
+          const eDate = endObj.dateTime ? new Date(endObj.dateTime) : sDate;
+
+          const key = getVNDateKey(sDate);
+          const sTime = formatVNTime(sDate);
+          const eTime = formatVNTime(eDate);
+          const timeRangeStr = `${sTime} – ${eTime}`;
+
+          eventsByDate[key] = eventsByDate[key] || [];
+          const exists = eventsByDate[key].some(ev => ev.timeRange === timeRangeStr);
+          if (!exists) {
+            eventsByDate[key].push({
+              timeRange: timeRangeStr,
+              isAllDay: false,
+              summary: event.summary || 'Đã có lịch chụp'
+            });
+          }
+        }
+      });
+
+      // Sắp xếp các khung giờ bận trong ngày theo thứ tự thời gian
+      Object.keys(eventsByDate).forEach(key => {
+        eventsByDate[key].sort((a, b) => {
+          if (a.isAllDay) return -1;
+          if (b.isAllDay) return 1;
+          return a.timeRange.localeCompare(b.timeRange);
+        });
+      });
+
+    } catch (err) {
+      console.warn('Google Calendar fetch error:', err);
+    }
+  }
+
+  function renderCalendar() {
+    calMonthTitle.textContent = `${MONTH_NAMES[currentMonth]}, ${currentYear}`;
+    calDaysGrid.innerHTML = '';
+
+    const firstDayIndex = new Date(currentYear, currentMonth, 1).getDay();
+    // Chuyển Chủ nhật (0) thành 6 để Thứ 2 là cột đầu tiên (0)
+    const startOffset = (firstDayIndex + 6) % 7;
+    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+    // Ô trống đầu tháng
+    for (let i = 0; i < startOffset; i++) {
+      const emptyCell = document.createElement('div');
+      emptyCell.className = 'cal-day cal-day--empty';
+      calDaysGrid.appendChild(emptyCell);
+    }
+
+    // Các ngày trong tháng
+    for (let d = 1; d <= daysInMonth; d++) {
+      const date = new Date(currentYear, currentMonth, d);
+      const dateKey = formatDateKey(date);
+      const isPast = date < today;
+      const isToday = date.getTime() === today.getTime();
+      const isSelected = date.getTime() === selectedDate.getTime();
+      const events = eventsByDate[dateKey] || [];
+      const hasBusySlots = events.length > 0;
+
+      const dayCell = document.createElement('button');
+      dayCell.type = 'button';
+      dayCell.className = 'cal-day';
+      dayCell.textContent = d;
+
+      if (isPast) {
+        dayCell.classList.add('cal-day--past');
+        dayCell.setAttribute('disabled', 'true');
+        dayCell.setAttribute('aria-label', `Ngày ${d} đã qua`);
+      } else {
+        if (hasBusySlots) {
+          // Phân loại chi tiết: sáng / chiều / cả ngày / hỗn hợp
+          // Một sự kiện "chiếm buổi sáng" nếu nó BẮT ĐẦU trước 12:00
+          // Một sự kiện "chiếm buổi chiều" nếu nó KẾT THÚC sau 12:00 hoặc bắt đầu từ 12:00
+          // Ví dụ: 07:00–17:00 → bắt đầu sáng + kết thúc chiều → hasMorning & hasAfternoon → cal-day--both
+          const hasAllDay  = events.some(ev => ev.isAllDay);
+          const timedEvs   = events.filter(ev => !ev.isAllDay);
+
+          const hasMorning = timedEvs.some(ev => {
+            // Dạng "HH:MM – HH:MM"
+            const parts = ev.timeRange.split('–');
+            const startHour = parseInt((parts[0] || '').trim().split(':')[0], 10);
+            return startHour < 12;
+          });
+
+          const hasAfternoon = timedEvs.some(ev => {
+            const parts = ev.timeRange.split('–');
+            const startHour = parseInt((parts[0] || '').trim().split(':')[0], 10);
+            const endHour   = parseInt((parts[1] || parts[0] || '').trim().split(':')[0], 10);
+            // Chiếm buổi chiều nếu: bắt đầu từ 12h trở đi HOẶC kết thúc sau 12h
+            return startHour >= 12 || endHour > 12;
+          });
+
+          let busyClass;
+          if (hasAllDay) {
+            busyClass = 'cal-day--full';
+          } else if (hasMorning && hasAfternoon) {
+            busyClass = 'cal-day--both';
+          } else if (hasMorning) {
+            busyClass = 'cal-day--morning';
+          } else if (hasAfternoon) {
+            busyClass = 'cal-day--afternoon';
+          } else {
+            busyClass = 'cal-day--busy';
+          }
+
+          dayCell.classList.add(busyClass);
+          dayCell.setAttribute('aria-label', `Ngày ${d} có ${events.length} ca đã có lịch`);
+        } else {
+          dayCell.classList.add('cal-day--available');
+          dayCell.setAttribute('aria-label', `Ngày ${d} còn trống`);
+        }
+
+        if (isToday) dayCell.classList.add('cal-day--today');
+        if (isSelected) dayCell.classList.add('cal-day--selected');
+
+        dayCell.addEventListener('click', () => {
+          selectedDate = new Date(date);
+          updateInfoPanel(date, events);
+          // Update selected style
+          calDaysGrid.querySelectorAll('.cal-day').forEach(el => el.classList.remove('cal-day--selected'));
+          dayCell.classList.add('cal-day--selected');
+        });
+      }
+
+      calDaysGrid.appendChild(dayCell);
+    }
+
+    // Cập nhật thông tin ngày đang chọn
+    const selectedKey = formatDateKey(selectedDate);
+    updateInfoPanel(selectedDate, eventsByDate[selectedKey] || []);
+  }
+
+  function updateInfoPanel(date, events = []) {
+    const dayOfWeek = DAY_NAMES[date.getDay()];
+    const d = date.getDate();
+    const m = date.getMonth() + 1;
+    const y = date.getFullYear();
+    const isPast = date < today;
+
+    if (infoDayName) infoDayName.textContent = dayOfWeek;
+    if (infoDateStr) infoDateStr.textContent = `${d} Tháng ${m}, ${y}`;
+
+    if (isPast) {
+      if (infoBadge) infoBadge.className = 'cal-info-badge cal-info-badge--busy';
+      if (infoStatus) infoStatus.textContent = 'Ngày đã qua';
+      if (infoDesc) infoDesc.textContent = 'Ngày này đã trôi qua. Vui lòng chọn một ngày từ hôm nay trở đi để xem lịch trống.';
+      if (slotsCount) slotsCount.textContent = '0 ca';
+      if (slotsList) {
+        slotsList.innerHTML = `
+          <div class="cal-slot-item">
+            <span style="color: var(--text-muted); font-size: 13px;">Ngày đã qua, không khả dụng</span>
+          </div>`;
+      }
+      if (bookBtn) {
+        bookBtn.style.opacity = '0.4';
+        bookBtn.style.pointerEvents = 'none';
+      }
+    }
+    // Ngày hoàn toàn trống (0 sự kiện bận)
+    else if (!events || events.length === 0) {
+      if (infoBadge) infoBadge.className = 'cal-info-badge cal-info-badge--available';
+      if (infoStatus) infoStatus.textContent = 'Còn trống lịch chụp';
+      if (infoDesc) infoDesc.textContent = 'Tuyệt vời! Ngày này studio hiện đang hoàn toàn trống lịch. Bạn có thể chọn bất kỳ khung giờ nào thuận tiện nhất.';
+      if (slotsCount) slotsCount.textContent = 'Trống cả ngày';
+      if (slotsList) {
+        slotsList.innerHTML = `
+          <div class="cal-slot-item cal-slot-free">
+            <div class="cal-slot-time">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 14 10"/></svg>
+              <span>Cả ngày (Sáng & Chiều)</span>
+            </div>
+            <span class="cal-slot-tag cal-slot-tag--free">Còn trống</span>
+          </div>
+          <p class="cal-slots-hint">✨ Bạn có thể thoải mái chọn bất kỳ khung giờ nào trong ngày để đặt lịch chụp.</p>`;
+      }
+      if (bookBtn) {
+        bookBtn.style.opacity = '1';
+        bookBtn.style.pointerEvents = 'all';
+        bookBtn.querySelector('span').textContent = 'ĐẶT LỊCH NGÀY NÀY';
+        bookBtn.href = `https://m.me/thoriuoi17951035?text=${encodeURIComponent(`Chào DABBIT PHOTO! Mình muốn đặt lịch chụp vào ${dayOfWeek}, ngày ${d}/${m}/${y} ạ!`)}`;
+      }
+    }
+    // Ngày có sự kiện bận (theo giờ hoặc cả ngày)
+    else {
+      const hasAllDay = events.some(ev => ev.isAllDay);
+
+      if (hasAllDay) {
+        if (infoBadge) infoBadge.className = 'cal-info-badge cal-info-badge--busy';
+        if (infoStatus) infoStatus.textContent = 'Kín lịch cả ngày';
+        if (infoDesc) infoDesc.textContent = 'Rất tiếc, ngày này DABBIT PHOTO đã kín lịch chụp cả ngày. Bạn có thể liên hệ để studio hỗ trợ sắp xếp ca phù hợp hoặc chọn ngày khác nhé!';
+        if (slotsCount) slotsCount.textContent = 'Kín cả ngày';
+        if (slotsList) {
+          slotsList.innerHTML = `
+            <div class="cal-slot-item cal-slot-busy">
+              <div class="cal-slot-time">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <span>Cả ngày</span>
+              </div>
+              <span class="cal-slot-tag">Đã kín lịch</span>
+            </div>`;
+        }
+        if (bookBtn) {
+          bookBtn.style.opacity = '0.7';
+          bookBtn.style.pointerEvents = 'all';
+          bookBtn.querySelector('span').textContent = 'LIÊN HỆ HỖ TRỢ XẾP LỊCH';
+          bookBtn.href = `https://m.me/thoriuoi17951035?text=${encodeURIComponent(`Chào DABBIT PHOTO! Mình thấy ngày ${dayOfWeek}, ${d}/${m}/${y} đã kín lịch cả ngày, studio tư vấn giúp mình ca chụp khác hoặc ngày gần đó được không ạ?`)}`;
+        }
+      } else {
+        // Có các khung giờ bận cụ thể
+        if (infoBadge) infoBadge.className = 'cal-info-badge cal-info-badge--busy';
+        if (infoStatus) infoStatus.textContent = 'Đã có lịch theo giờ';
+        if (infoDesc) infoDesc.textContent = 'Ngày này studio đã có lịch chụp ở các khung giờ bên dưới. Các khung giờ còn lại trong ngày vẫn nhận lịch bình thường nhé!';
+        if (slotsCount) slotsCount.textContent = `${events.length} ca đã kín`;
+
+        const slotsHtml = events.map(ev => `
+          <div class="cal-slot-item cal-slot-busy">
+            <div class="cal-slot-time">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              <span>${ev.timeRange}</span>
+            </div>
+            <span class="cal-slot-tag">Đã kín lịch</span>
+          </div>
+        `).join('');
+
+        if (slotsList) {
+          slotsList.innerHTML = slotsHtml + `
+            <p class="cal-slots-hint">✨ Các khung giờ còn lại trong ngày vẫn nhận lịch bình thường!</p>`;
+        }
+
+        if (bookBtn) {
+          bookBtn.style.opacity = '1';
+          bookBtn.style.pointerEvents = 'all';
+          bookBtn.querySelector('span').textContent = 'ĐẶT LỊCH GIỜ CÒN LẠI';
+          const busyTimes = events.map(e => e.timeRange).join(', ');
+          bookBtn.href = `https://m.me/thoriuoi17951035?text=${encodeURIComponent(`Chào DABBIT PHOTO! Mình muốn đặt lịch chụp vào ${dayOfWeek}, ngày ${d}/${m}/${y} (trừ các ca bận: ${busyTimes}) ạ!`)}`;
+        }
+      }
+    }
+  }
+
+  // Navigation handlers
+  if (calPrevBtn) {
+    calPrevBtn.addEventListener('click', async () => {
+      currentMonth--;
+      if (currentMonth < 0) {
+        currentMonth = 11;
+        currentYear--;
+      }
+      await loadBusyDates(currentYear, currentMonth);
+      renderCalendar();
+    });
+  }
+
+  if (calNextBtn) {
+    calNextBtn.addEventListener('click', async () => {
+      currentMonth++;
+      if (currentMonth > 11) {
+        currentMonth = 0;
+        currentYear++;
+      }
+      await loadBusyDates(currentYear, currentMonth);
+      renderCalendar();
+    });
+  }
+
+  if (calTodayBtn) {
+    calTodayBtn.addEventListener('click', async () => {
+      const nowVN = getTodayVN();
+      currentYear = nowVN.getFullYear();
+      currentMonth = nowVN.getMonth();
+      selectedDate = new Date(nowVN);
+      await loadBusyDates(currentYear, currentMonth);
+      renderCalendar();
+    });
+  }
+
+  // Initial load
+  (async function init() {
+    await loadBusyDates(currentYear, currentMonth);
+    renderCalendar();
+  })();
+})();
+
 

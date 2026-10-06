@@ -29,6 +29,7 @@
         <li><a href="#portfolio" class="nav-link" data-section="portfolio">Portfolio</a></li>
         <li><a href="#pricing" class="nav-link" data-section="pricing">Dịch vụ</a></li>
         <li><a href="#pricing" class="nav-link">Bảng giá</a></li>
+        <li><a href="#availability" class="nav-link" data-section="availability">Lịch chụp</a></li>
         <li><a href="#footer" class="nav-link" data-section="footer">Liên hệ</a></li>
       </ul>
     </nav>
@@ -121,6 +122,7 @@
         <li><a href="#portfolio" class="mobile-nav-link">Portfolio</a></li>
         <li><a href="#featured" class="mobile-nav-link">Dịch vụ</a></li>
         <li><a href="#pricing" class="mobile-nav-link">Bảng giá</a></li>
+        <li><a href="#availability" class="mobile-nav-link">Lịch chụp</a></li>
         <li><a href="#footer" class="mobile-nav-link">Liên hệ</a></li>
       </ul>
     </nav>
@@ -156,10 +158,43 @@
           <span class="album-modal-label">ALBUM</span>
           <h2 class="album-modal-title" id="album-modal-title">Tất cả</h2>
         </div>
+        <div class="album-modal-header-actions" id="album-modal-header-actions">
+          <span class="album-pc-counter" id="album-pc-counter">01 / 01</span>
+          <div class="album-view-switcher" role="group" aria-label="Kiểu hiển thị">
+            <button class="album-mode-btn active" id="album-mode-single" type="button" title="Xem từng ảnh" aria-label="Xem từng ảnh">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+              <span>Từng ảnh</span>
+            </button>
+            <button class="album-mode-btn" id="album-mode-list" type="button" title="Xem danh sách" aria-label="Xem danh sách">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+              <span>Danh sách</span>
+            </button>
+          </div>
+        </div>
         <button class="album-modal-close" id="album-modal-close" aria-label="Đóng album">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </button>
       </div>
+
+      <!-- PC Single Image Stage (dạng từng hình ảnh) -->
+      <div class="album-pc-single-view" id="album-pc-single-view">
+        <div class="album-pc-stage">
+          <button class="album-pc-arrow album-pc-prev" id="album-pc-prev" type="button" aria-label="Ảnh trước">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <div class="album-pc-img-wrap" id="album-pc-img-wrap">
+            <img class="album-pc-img" id="album-pc-img" src="" alt="Album photo" />
+          </div>
+          <button class="album-pc-arrow album-pc-next" id="album-pc-next" type="button" aria-label="Ảnh sau">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+        <!-- Bottom thumbnail strip -->
+        <div class="album-pc-thumbs-wrap">
+          <div class="album-pc-thumbs" id="album-pc-thumbs" role="tablist" aria-label="Danh sách ảnh thu nhỏ"></div>
+        </div>
+      </div>
+
       <div class="album-modal-grid" id="album-modal-grid"></div>
     </div>
     <!-- Full-size viewer -->
@@ -312,6 +347,112 @@
       </div>
 
     </section><!-- /hero -->
+
+    <!-- ─── AVAILABILITY / CALENDAR ──────────── -->
+    <section class="availability" id="availability" aria-label="Lịch trống DABBIT PHOTO">
+      <div class="section-inner">
+        <div class="availability-header">
+          <div class="availability-header-left">
+            <p class="section-label reveal">AVAILABILITY</p>
+            <h2 class="availability-title reveal">
+              Kiểm tra lịch trống<br>
+              dành cho bạn.
+            </h2>
+          </div>
+          <div class="availability-header-right reveal">
+            <p class="availability-desc">
+              Lịch được đồng bộ tự động từ Google Calendar của DABBIT PHOTO.
+              Bạn có thể xem trước các ngày còn trống và chọn ngày mong muốn trước khi liên hệ đặt lịch.
+            </p>
+          </div>
+        </div>
+
+        <div class="availability-grid reveal">
+          <!-- Left: Calendar Card -->
+          <div class="cal-card">
+            <div class="cal-header">
+              <div class="cal-month-title" id="cal-month-title">Tháng 10, 2026</div>
+              <div class="cal-nav">
+                <button class="cal-nav-btn" id="cal-prev" type="button" aria-label="Tháng trước">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+                </button>
+                <button class="cal-nav-btn cal-today-btn" id="cal-today-btn" type="button" aria-label="Hôm nay">Hôm nay</button>
+                <button class="cal-nav-btn" id="cal-next" type="button" aria-label="Tháng sau">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Days of Week -->
+            <div class="cal-weekdays">
+              <span>T2</span><span>T3</span><span>T4</span><span>T5</span><span>T6</span><span>T7</span><span>CN</span>
+            </div>
+
+            <!-- Days Grid -->
+            <div class="cal-days" id="cal-days"></div>
+
+            <!-- Legend -->
+            <div class="cal-legend">
+              <div class="cal-legend-item">
+                <span class="cal-dot cal-dot--available"></span>
+                <span>Còn trống</span>
+              </div>
+              <div class="cal-legend-item">
+                <span class="cal-dot cal-dot--morning"></span>
+                <span>Bận sáng</span>
+              </div>
+              <div class="cal-legend-item">
+                <span class="cal-dot cal-dot--afternoon"></span>
+                <span>Bận chiều</span>
+              </div>
+              <div class="cal-legend-item">
+                <span class="cal-dot cal-dot--full"></span>
+                <span>Kín cả ngày</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Date Status & Action Panel -->
+          <div class="cal-info-card">
+            <div class="cal-info-badge" id="cal-info-badge">
+              <span class="cal-info-badge-dot"></span>
+              <span id="cal-info-status">Đang tải lịch...</span>
+            </div>
+
+            <div class="cal-info-date">
+              <span class="cal-info-dayname" id="cal-info-dayname">Thứ Bảy</span>
+              <h3 class="cal-info-datestr" id="cal-info-datestr">17 Tháng 10, 2026</h3>
+            </div>
+
+            <div class="cal-info-desc" id="cal-info-desc">
+              Vui lòng chọn một ngày trên lịch để xem tình trạng nhận lịch chụp.
+            </div>
+
+            <!-- Khung giờ bận / Lịch trình trong ngày -->
+            <div class="cal-slots-card" id="cal-slots-card">
+              <div class="cal-slots-header">
+                <span class="cal-slots-label">KHUNG GIỜ ĐÃ CÓ LỊCH / BẬN:</span>
+                <span class="cal-slots-count" id="cal-slots-count">0 ca bận</span>
+              </div>
+              <div class="cal-slots-list" id="cal-slots-list">
+                <!-- Danh sách khung giờ render qua JS -->
+              </div>
+            </div>
+
+            <div class="cal-info-actions">
+              <a href="https://m.me/thoriuoi17951035" target="_blank" rel="noopener" class="btn-primary cal-book-btn" id="cal-book-btn">
+                <span>ĐẶT LỊCH NGÀY NÀY</span>
+                <span class="btn-arrow">→</span>
+              </a>
+              <a href="tel:0857170905" class="cal-call-link">
+                <span>Hoặc gọi trực tiếp: <strong>0857 170 905</strong></span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section><!-- /availability -->
 
     <!-- ─── OUR STORY ─────────────────────── -->
     <section class="story" id="story" aria-label="Our story section">
@@ -471,6 +612,22 @@
             </div>
           </div>
 
+          <div class="port-item port-portrait port-desktop-only reveal" data-category="couple" role="img" aria-label="Couple photography 3">
+            <img src="anh/couple/optimized/IMG_3026.JPG" alt="Couple photography" loading="lazy" />
+            <div class="port-overlay" aria-hidden="true">
+              <span class="port-category-label">Couple</span>
+              <span class="port-arrow" aria-hidden="true">↗</span>
+            </div>
+          </div>
+
+          <div class="port-item port-portrait port-desktop-only reveal" data-category="couple" role="img" aria-label="Couple photography 4">
+            <img src="anh/couple/optimized/IMG_5020.JPG" alt="Couple photography" loading="lazy" />
+            <div class="port-overlay" aria-hidden="true">
+              <span class="port-category-label">Couple</span>
+              <span class="port-arrow" aria-hidden="true">↗</span>
+            </div>
+          </div>
+
           <!-- ═══ TẾT (Ngang trước, Dọc sau) ═══ -->
           <div class="port-item port-wide reveal" data-category="tet" role="img" aria-label="Tết landscape photography">
             <img src="anh/tet/optimized/IMG_2867.jpeg" alt="Tết photography" loading="lazy" />
@@ -489,6 +646,22 @@
 
           <div class="port-item port-portrait reveal" data-category="tet" role="img" aria-label="Tết photography 2">
             <img src="anh/tet/optimized/IMG_2868.jpeg" alt="Tết photography" loading="lazy" />
+            <div class="port-overlay" aria-hidden="true">
+              <span class="port-category-label">Tết</span>
+              <span class="port-arrow" aria-hidden="true">↗</span>
+            </div>
+          </div>
+
+          <div class="port-item port-portrait port-desktop-only reveal" data-category="tet" role="img" aria-label="Tết photography 3">
+            <img src="anh/tet/optimized/IMG_2906.JPG" alt="Tết photography" loading="lazy" />
+            <div class="port-overlay" aria-hidden="true">
+              <span class="port-category-label">Tết</span>
+              <span class="port-arrow" aria-hidden="true">↗</span>
+            </div>
+          </div>
+
+          <div class="port-item port-portrait port-desktop-only reveal" data-category="tet" role="img" aria-label="Tết photography 4">
+            <img src="anh/tet/optimized/DSC09271.JPEG" alt="Tết photography" loading="lazy" />
             <div class="port-overlay" aria-hidden="true">
               <span class="port-category-label">Tết</span>
               <span class="port-arrow" aria-hidden="true">↗</span>
@@ -514,6 +687,22 @@
 
           <div class="port-item port-portrait reveal" data-category="ki-yeu" role="img" aria-label="Kỉ yếu photography 2">
             <img src="anh/tot nghiep/optimized/IMG_4203.JPG" alt="Kỉ yếu photography" loading="lazy" />
+            <div class="port-overlay" aria-hidden="true">
+              <span class="port-category-label">Kỉ yếu</span>
+              <span class="port-arrow" aria-hidden="true">↗</span>
+            </div>
+          </div>
+
+          <div class="port-item port-portrait port-desktop-only reveal" data-category="ki-yeu" role="img" aria-label="Kỉ yếu photography 3">
+            <img src="anh/tot nghiep/optimized/IMG_3835.JPG" alt="Kỉ yếu photography" loading="lazy" />
+            <div class="port-overlay" aria-hidden="true">
+              <span class="port-category-label">Kỉ yếu</span>
+              <span class="port-arrow" aria-hidden="true">↗</span>
+            </div>
+          </div>
+
+          <div class="port-item port-portrait port-desktop-only reveal" data-category="ki-yeu" role="img" aria-label="Kỉ yếu photography 4">
+            <img src="anh/tot nghiep/optimized/IMG_4399.JPG" alt="Kỉ yếu photography" loading="lazy" />
             <div class="port-overlay" aria-hidden="true">
               <span class="port-category-label">Kỉ yếu</span>
               <span class="port-arrow" aria-hidden="true">↗</span>
@@ -726,6 +915,7 @@
           <a href="#portfolio">Portfolio</a>
           <a href="#featured">Dịch vụ</a>
           <a href="#pricing">Bảng giá</a>
+          <a href="#availability">Lịch chụp</a>
           <a href="#footer">Liên hệ</a>
         </nav>
 

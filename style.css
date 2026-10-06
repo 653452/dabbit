@@ -365,6 +365,21 @@ img:not([src=""]) ~ .thumb-placeholder-label {
   color: var(--text-primary);
   letter-spacing: 0.12em;
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+}
+
+/* Logo icon trong mobile navbar – hiện nhỏ gọn */
+.mobile-logo-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  object-fit: cover;
+  flex-shrink: 0;
+  display: block;
+  border: 1px solid rgba(212, 175, 55, 0.3);
 }
 
 .hamburger {
@@ -590,7 +605,11 @@ img:not([src=""]) ~ .thumb-placeholder-label {
 }
 
 .section-inner {
-  padding: 100px 50px;
+  padding: 110px 80px;
+  max-width: 1440px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
 }
 
 /* ─── BUTTONS ───────────────────────────────── */
@@ -752,9 +771,9 @@ img:not([src=""]) ~ .thumb-placeholder-label {
 .hero-content {
   position: relative;
   z-index: 2;
-  padding-left: 6%;
-  padding-right: 20%;
-  max-width: 680px;
+  padding-left: 80px;
+  padding-right: 22%;
+  max-width: 760px;
 }
 
 .hero-label {
@@ -772,7 +791,7 @@ img:not([src=""]) ~ .thumb-placeholder-label {
 }
 
 .hero-ampersand {
-  color: var(--accent);
+  color: #c9a96e;
   font-style: italic;
 }
 
@@ -789,13 +808,13 @@ img:not([src=""]) ~ .thumb-placeholder-label {
 /* Hero thumbs */
 .hero-thumbs {
   position: absolute;
-  right: 28px;
+  right: 40px;
   top: 50%;
   transform: translateY(-50%);
   z-index: 2;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 14px;
 }
 
 .hero-thumb-item {
@@ -819,11 +838,11 @@ img:not([src=""]) ~ .thumb-placeholder-label {
 }
 
 .thumb-slot {
-  width: 88px;
-  height: 118px;
+  width: 96px;
+  height: 128px;
   flex-shrink: 0;
   background: #131a1e;
-  border-radius: 2px;
+  border-radius: 3px;
   transition: box-shadow 0.35s ease;
 }
 
@@ -909,9 +928,9 @@ img:not([src=""]) ~ .thumb-placeholder-label {
 
 .story-grid {
   display: grid;
-  grid-template-columns: 35% 65%;
-  gap: 60px;
-  align-items: start;
+  grid-template-columns: 40% 60%;
+  gap: 80px;
+  align-items: center;
 }
 
 .story-title {
@@ -933,7 +952,7 @@ img:not([src=""]) ~ .thumb-placeholder-label {
 .story-visuals {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
+  gap: 20px;
   align-items: start;
 }
 
@@ -1012,7 +1031,7 @@ img:not([src=""]) ~ .thumb-placeholder-label {
 .featured-track {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
+  gap: 20px;
   transition: transform 0.55s cubic-bezier(0.4,0,0.2,1);
 }
 
@@ -1150,12 +1169,22 @@ img:not([src=""]) ~ .thumb-placeholder-label {
   border-bottom-color: var(--accent);
 }
 
-/* Editorial Masonry Grid */
+/* Chỉ hiển thị trên PC (ẩn trên mobile/tablet) */
+.port-desktop-only {
+  display: none;
+}
+@media (min-width: 1025px) {
+  .port-desktop-only {
+    display: block;
+  }
+}
+
+/* Editorial Portfolio Grid */
 .portfolio-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: auto auto;
-  gap: 12px;
+  grid-template-rows: auto;
+  gap: 16px;
 }
 
 /* Portfolio items */
@@ -1205,32 +1234,41 @@ img:not([src=""]) ~ .thumb-placeholder-label {
   aspect-ratio: 3/4;
 }
 
-/* Wide landscape cards (aspect-ratio 16:10, span 2 columns) */
+/* Wide landscape cards – default (overridden by desktop media query) */
 .port-item.port-wide {
   grid-column: span 2;
-  aspect-ratio: 16/10;
+  aspect-ratio: 16/9;
 }
 
 .port-item.port-wide img {
   object-position: center center;
 }
 
-/* Desktop balanced 4-column arrangement:
-   Mỗi album gồm 2 ảnh dọc (1 cột mỗi ảnh) + 1 ảnh ngang (2 cột) = đúng 4 cột 1 hàng!
+/* Desktop layout:
+   - Ảnh ngang (port-wide): chiếm toàn bộ 1 hàng (4 cột)
+   - Ảnh dọc (port-portrait): xếp 4 ảnh một hàng, xen kẽ nhau
 */
 @media (min-width: 1025px) {
   .portfolio-grid {
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: auto;
-    gap: 12px;
+    gap: 16px;
   }
+
+  /* Ảnh ngang: chiếm toàn bộ hàng (4/4 cột) */
+  .port-item.port-wide {
+    grid-column: 1 / -1 !important;
+    aspect-ratio: 21/9;
+  }
+
+  .port-item.port-wide img {
+    object-position: center 35%;
+  }
+
+  /* Ảnh dọc: mỗi ảnh chiếm 1 cột trong 4 cột */
   .port-item.port-portrait {
     grid-column: span 1 !important;
     aspect-ratio: 3/4;
-  }
-  .port-item.port-wide {
-    grid-column: span 2 !important;
-    aspect-ratio: 16/10;
   }
 }
 
@@ -1332,7 +1370,7 @@ img:not([src=""]) ~ .thumb-placeholder-label {
   width: 1px;
   background: var(--border);
   align-self: stretch;
-  margin: 0 48px;
+  margin: 0 64px;
 }
 
 .pricing-service {
@@ -1504,6 +1542,606 @@ img:not([src=""]) ~ .thumb-placeholder-label {
   z-index: 0;
 }
 
+/* ─── AVAILABILITY / CALENDAR ────────────────── */
+.availability {
+  position: relative;
+  background: var(--bg-primary);
+  border-top: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.availability-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 50px;
+  gap: 40px;
+}
+
+.availability-title {
+  font-family: var(--font-serif);
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 300;
+  line-height: 1.15;
+  color: var(--text-primary);
+}
+
+.availability-desc {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  max-width: 440px;
+}
+
+.availability-grid {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  gap: 32px;
+  align-items: stretch;
+}
+
+/* Calendar Card (Left) */
+.cal-card {
+  background: rgba(13, 18, 22, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 32px;
+  backdrop-filter: blur(12px);
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.cal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.cal-month-title {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--text-primary);
+  letter-spacing: 0.02em;
+}
+
+.cal-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cal-nav-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-primary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.cal-nav-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: scale(1.05);
+}
+
+.cal-today-btn {
+  width: auto;
+  height: 36px;
+  padding: 0 14px;
+  border-radius: 18px;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+.cal-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.cal-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  flex: 1;
+}
+
+.cal-day {
+  aspect-ratio: 1;
+  min-height: 44px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-primary);
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+  position: relative;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.cal-day--empty {
+  background: transparent;
+  cursor: default;
+}
+
+.cal-day--past {
+  opacity: 0.25;
+  cursor: not-allowed;
+  background: transparent;
+}
+
+.cal-day--available:hover,
+.cal-day--morning:hover,
+.cal-day--afternoon:hover,
+.cal-day--both:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.15);
+}
+
+.cal-day--today {
+  border-color: rgba(255, 255, 255, 0.3) !important;
+  font-weight: 600;
+}
+
+/* ── Còn trống ── */
+.cal-day--available::after {
+  content: '';
+  position: absolute;
+  bottom: 6px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #2a9d8f;
+  opacity: 0.75;
+}
+.cal-day--available:hover {
+  background: rgba(42, 157, 143, 0.08);
+  border-color: rgba(42, 157, 143, 0.3);
+}
+
+/* ── Bận buổi sáng (nửa trên đỏ) ── */
+.cal-day--morning {
+  background: linear-gradient(
+    to bottom,
+    rgba(230, 57, 70, 0.28) 0%,
+    rgba(230, 57, 70, 0.12) 50%,
+    rgba(255,255,255,0.02) 50%,
+    rgba(255,255,255,0.02) 100%
+  );
+  color: rgba(255, 255, 255, 0.80);
+  border-color: rgba(230, 57, 70, 0.18);
+}
+.cal-day--morning::after {
+  content: '';
+  position: absolute;
+  top: 6px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #e63946;
+  opacity: 0.85;
+}
+
+/* ── Bận buổi chiều (nửa dưới đỏ) ── */
+.cal-day--afternoon {
+  background: linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.02) 0%,
+    rgba(255,255,255,0.02) 50%,
+    rgba(230, 57, 70, 0.12) 50%,
+    rgba(230, 57, 70, 0.28) 100%
+  );
+  color: rgba(255, 255, 255, 0.80);
+  border-color: rgba(230, 57, 70, 0.18);
+}
+.cal-day--afternoon::after {
+  content: '';
+  position: absolute;
+  bottom: 6px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #e63946;
+  opacity: 0.85;
+}
+
+/* ── Bận cả sáng lẫn chiều (gradient 3 vùng) ── */
+.cal-day--both {
+  background: linear-gradient(
+    to bottom,
+    rgba(230, 57, 70, 0.28) 0%,
+    rgba(230, 57, 70, 0.12) 40%,
+    rgba(230, 57, 70, 0.06) 60%,
+    rgba(230, 57, 70, 0.28) 100%
+  );
+  color: rgba(255, 255, 255, 0.80);
+  border-color: rgba(230, 57, 70, 0.25);
+}
+.cal-day--both::before {
+  content: '';
+  position: absolute;
+  top: 6px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #e63946;
+  opacity: 0.85;
+}
+.cal-day--both::after {
+  content: '';
+  position: absolute;
+  bottom: 6px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #e63946;
+  opacity: 0.85;
+}
+
+/* ── Kín cả ngày (full đỏ) ── */
+.cal-day--full {
+  background: rgba(230, 57, 70, 0.18);
+  color: rgba(255, 255, 255, 0.75);
+  border-color: rgba(230, 57, 70, 0.3);
+}
+.cal-day--full::after {
+  content: '';
+  position: absolute;
+  bottom: 6px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #e63946;
+}
+
+/* ── Backward compat alias ── */
+.cal-day--busy {
+  background: rgba(230, 57, 70, 0.08);
+  color: rgba(255, 255, 255, 0.65);
+}
+.cal-day--busy::after {
+  content: '';
+  position: absolute;
+  bottom: 6px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #e63946;
+}
+
+/* ── Đang chọn ── */
+.cal-day--selected {
+  background: var(--accent) !important;
+  color: #fff !important;
+  font-weight: 600;
+  border-color: var(--accent) !important;
+  box-shadow: 0 4px 16px rgba(184, 51, 42, 0.45);
+  transform: translateY(-2px);
+}
+.cal-day--selected::before,
+.cal-day--selected::after {
+  background: rgba(255,255,255,0.75) !important;
+  opacity: 1 !important;
+}
+
+.cal-legend {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.cal-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.cal-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.cal-dot--available { background: #2a9d8f; }
+.cal-dot--busy      { background: #e63946; }
+.cal-dot--selected  { background: var(--accent); }
+
+/* Legend dots nửa màu */
+.cal-dot--morning {
+  background: linear-gradient(to bottom, #e63946 50%, rgba(255,255,255,0.10) 50%);
+  border: 1px solid rgba(230,57,70,0.3);
+}
+.cal-dot--afternoon {
+  background: linear-gradient(to bottom, rgba(255,255,255,0.10) 50%, #e63946 50%);
+  border: 1px solid rgba(230,57,70,0.3);
+}
+.cal-dot--both {
+  background: linear-gradient(to bottom, #e63946 35%, rgba(230,57,70,0.2) 50%, #e63946 65%);
+}
+.cal-dot--full {
+  background: #e63946;
+  opacity: 0.85;
+}
+
+/* Info Card (Right) */
+.cal-info-card {
+  background: rgba(13, 18, 22, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 36px 32px;
+  backdrop-filter: blur(12px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.cal-info-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  width: fit-content;
+  margin-bottom: 24px;
+}
+
+.cal-info-badge--available {
+  background: rgba(42, 157, 143, 0.15);
+  color: #2a9d8f;
+  border: 1px solid rgba(42, 157, 143, 0.3);
+}
+
+.cal-info-badge--available .cal-info-badge-dot {
+  background: #2a9d8f;
+}
+
+.cal-info-badge--busy {
+  background: rgba(230, 57, 70, 0.15);
+  color: #e63946;
+  border: 1px solid rgba(230, 57, 70, 0.3);
+}
+
+.cal-info-badge--busy .cal-info-badge-dot {
+  background: #e63946;
+}
+
+.cal-info-badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.cal-info-dayname {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.cal-info-datestr {
+  font-family: var(--font-serif);
+  font-size: clamp(26px, 2.5vw, 34px);
+  font-weight: 400;
+  color: var(--text-primary);
+  line-height: 1.2;
+  margin-bottom: 16px;
+}
+
+.cal-info-desc {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--text-secondary);
+  margin-bottom: 28px;
+}
+
+/* Busy Hours / Time Slots Panel */
+.cal-slots-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cal-slots-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.cal-slots-label {
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  text-transform: uppercase;
+}
+
+.cal-slots-count {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.cal-slots-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cal-slot-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 9px 12px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: all 0.2s ease;
+}
+
+.cal-slot-item.cal-slot-busy {
+  background: rgba(230, 57, 70, 0.09);
+  border-color: rgba(230, 57, 70, 0.22);
+}
+
+.cal-slot-item.cal-slot-free {
+  background: rgba(42, 157, 143, 0.08);
+  border-color: rgba(42, 157, 143, 0.2);
+}
+
+.cal-slot-time {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.cal-slot-item.cal-slot-busy .cal-slot-time svg {
+  color: #e63946;
+}
+
+.cal-slot-item.cal-slot-free .cal-slot-time svg {
+  color: #2a9d8f;
+}
+
+.cal-slot-tag {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: rgba(230, 57, 70, 0.2);
+  color: #e63946;
+}
+
+.cal-slot-tag--free {
+  background: rgba(42, 157, 143, 0.2);
+  color: #2a9d8f;
+}
+
+.cal-slots-hint {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-muted);
+  margin: 4px 0 0;
+  font-style: italic;
+}
+
+.cal-info-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.cal-book-btn {
+  width: 100%;
+  justify-content: center;
+  padding: 15px 24px;
+  font-size: 12px;
+}
+
+.cal-call-link {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: var(--text-muted);
+  text-align: center;
+  transition: color 0.2s;
+}
+
+.cal-call-link:hover {
+  color: var(--text-primary);
+}
+
+.cal-call-link strong {
+  color: var(--text-primary);
+}
+
+@media (max-width: 900px) {
+  .availability-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .availability-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .cal-card {
+    padding: 22px 18px;
+  }
+  .cal-info-card {
+    padding: 26px 20px;
+  }
+  .cal-day {
+    min-height: 40px;
+    font-size: 12px;
+  }
+}
+
+@media (min-width: 1025px) {
+  .availability .section-inner {
+    padding: 110px 80px;
+  }
+}
+
 /* ─── FINAL CTA ──────────────────────────────── */
 .final-cta {
   position: relative;
@@ -1537,8 +2175,8 @@ img:not([src=""]) ~ .thumb-placeholder-label {
 .cta-content {
   position: relative;
   z-index: 2;
-  padding-left: 6%;
-  max-width: 560px;
+  padding-left: 80px;
+  max-width: 620px;
 }
 
 .cta-label {
@@ -1575,7 +2213,9 @@ img:not([src=""]) ~ .thumb-placeholder-label {
   display: flex;
   align-items: center;
   gap: 0;
-  padding: 36px 50px;
+  padding: 40px 80px;
+  max-width: 1440px;
+  margin: 0 auto;
 }
 
 .footer-sep {
@@ -1654,11 +2294,11 @@ img:not([src=""]) ~ .thumb-placeholder-label {
   .mobile-navbar  { display: block; width: 100%; }
   .main-content   { margin-left: 0; padding-top: 68px; }
 
-  .section-inner  { padding: 72px 32px; }
+  .section-inner  { padding: 80px 48px; max-width: 100%; }
 
   /* Hero */
   .hero           { height: 88vh; }
-  .hero-content   { padding-left: 7%; padding-right: 48%; }
+  .hero-content   { padding-left: 48px; padding-right: 46%; }
   .hero-thumbs    { right: 16px; }
   .thumb-slot     { width: 70px; height: 94px; }
   .hero-title     { font-size: clamp(36px, 6vw, 64px); }
@@ -1713,7 +2353,7 @@ img:not([src=""]) ~ .thumb-placeholder-label {
 @media (max-width: 767px) {
 
   /* ─ Layout chung ─ */
-  .section-inner  { padding: 60px 18px; }
+  .section-inner  { padding: 60px 20px; max-width: 100%; }
 
   /* ─ Mobile Navbar ─ */
   .mobile-navbar  { height: 60px; }
@@ -2007,6 +2647,12 @@ img:not([src=""]) ~ .thumb-placeholder-label {
   color: var(--text-primary);
 }
 
+/* PC-only album controls hidden on mobile & tablet by default */
+.album-modal-header-actions,
+.album-pc-single-view {
+  display: none;
+}
+
 /* Grid – single column large photo feed, easy to scroll */
 .album-modal-grid {
   flex: 1;
@@ -2205,6 +2851,268 @@ img:not([src=""]) ~ .thumb-placeholder-label {
   .album-viewer-prev { left: 10px; }
   .album-viewer-next { right: 10px; }
   .album-modal-title { font-size: 20px; }
+}
+
+/* ── PC CARD MODAL (≥ 1025px) ─────────────────── */
+@media (min-width: 1025px) {
+  /* Backdrop nhẹ hơn cho PC */
+  .album-modal-backdrop {
+    background: rgba(7, 11, 13, 0.85);
+    backdrop-filter: blur(14px);
+  }
+
+  /* Panel dạng card vừa vặn màn hình */
+  .album-modal-panel {
+    position: absolute;
+    inset: auto;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -46%) scale(0.96);
+    width: min(920px, 90vw);
+    height: min(86vh, 820px);
+    max-height: 86vh;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow:
+      0 40px 100px rgba(0, 0, 0, 0.8),
+      0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+    background: #0d1216;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Animation: trượt lên + fade in */
+  .album-modal.open .album-modal-panel {
+    transform: translate(-50%, -50%) scale(1);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                opacity 0.35s ease;
+  }
+
+  /* Header PC */
+  .album-modal-header {
+    padding: 16px 24px;
+    background: rgba(13, 18, 22, 0.96);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-shrink: 0;
+  }
+
+  /* Header actions */
+  .album-modal-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .album-pc-counter {
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    background: rgba(255, 255, 255, 0.05);
+    padding: 5px 12px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .album-view-switcher {
+    display: inline-flex;
+    background: rgba(255, 255, 255, 0.04);
+    padding: 3px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    gap: 2px;
+  }
+
+  .album-mode-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 10px;
+    border-radius: 6px;
+    border: none;
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 11px;
+    font-weight: 500;
+    font-family: var(--font-sans);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .album-mode-btn:hover {
+    color: var(--text-primary);
+  }
+
+  .album-mode-btn.active {
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+  }
+
+  /* ── PC SINGLE IMAGE STAGE (dạng từng ảnh) ── */
+  .album-pc-single-view {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .album-modal-panel.mode-list .album-pc-single-view {
+    display: none !important;
+  }
+
+  .album-pc-stage {
+    flex: 1;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 0;
+    padding: 14px 64px;
+    background: radial-gradient(circle at center, rgba(255,255,255,0.02) 0%, transparent 70%);
+  }
+
+  .album-pc-img-wrap {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 0;
+  }
+
+  .album-pc-img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+
+  .album-pc-img.switching {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+
+  .album-pc-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(18, 24, 28, 0.75);
+    color: var(--text-primary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, transform 0.2s, border-color 0.2s;
+    backdrop-filter: blur(8px);
+    z-index: 10;
+  }
+
+  .album-pc-arrow:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.25);
+    transform: translateY(-50%) scale(1.08);
+  }
+
+  .album-pc-prev { left: 14px; }
+  .album-pc-next { right: 14px; }
+
+  /* Bottom Thumbnails Strip on PC */
+  .album-pc-thumbs-wrap {
+    padding: 10px 18px 14px;
+    background: rgba(10, 14, 18, 0.85);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    flex-shrink: 0;
+  }
+
+  .album-pc-thumbs {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scroll-behavior: smooth;
+    justify-content: flex-start;
+  }
+
+  .album-pc-thumbs::-webkit-scrollbar { height: 4px; }
+  .album-pc-thumbs::-webkit-scrollbar-track { background: transparent; }
+  .album-pc-thumbs::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 2px; }
+
+  .album-pc-thumb-item {
+    flex: 0 0 auto;
+    width: 50px;
+    height: 50px;
+    border-radius: 6px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid transparent;
+    opacity: 0.4;
+    transition: opacity 0.2s, border-color 0.2s, transform 0.2s;
+    background: #000;
+  }
+
+  .album-pc-thumb-item:hover {
+    opacity: 0.85;
+    transform: translateY(-2px);
+  }
+
+  .album-pc-thumb-item.active {
+    opacity: 1;
+    border-color: var(--accent);
+    box-shadow: 0 0 10px rgba(184, 51, 42, 0.45);
+    transform: translateY(-2px);
+  }
+
+  .album-pc-thumb-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* ── PC LIST MODE (danh sách cuộn 1 cột rõ từng ảnh) ── */
+  .album-modal-panel:not(.mode-list) .album-modal-grid {
+    display: none !important;
+  }
+
+  .album-modal-panel.mode-list .album-modal-grid {
+    display: flex !important;
+    flex-direction: column;
+    gap: 20px;
+    padding: 24px 40px 40px;
+    align-items: center;
+    flex: 1;
+    overflow-y: auto;
+  }
+
+  .album-modal-panel.mode-list .album-grid-item {
+    max-width: 680px;
+    width: 100%;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+
+  .album-modal-panel.mode-list .album-grid-item img {
+    width: 100%;
+    height: auto;
+    max-height: 75vh;
+    object-fit: contain;
+    border-radius: 10px;
+  }
 }
 
 /* ═══════════════════════════════════════════════
