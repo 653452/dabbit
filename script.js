@@ -598,8 +598,6 @@ const IMAGES = {
         'anh/ki yeuuu new/optimized/IMG_5561.JPG',
         'anh/ki yeuuu new/optimized/IMG_5562.JPG',
         'anh/ki yeuuu new/optimized/IMG_5563.JPG',
-        'anh/ki yeuuu new/optimized/IMG_5564.JPG',
-        'anh/ki yeuuu new/optimized/IMG_5566.JPG',
         'anh/ki yeuuu new/optimized/IMG_5567.JPG',
         'anh/ki yeuuu new/optimized/IMG_5568.JPG',
         'anh/ki yeuuu new/optimized/IMG_5569.JPG'
@@ -916,8 +914,6 @@ const IMAGES = {
         'anh/ki yeuuu new/optimized/IMG_5561.JPG',
         'anh/ki yeuuu new/optimized/IMG_5562.JPG',
         'anh/ki yeuuu new/optimized/IMG_5563.JPG',
-        'anh/ki yeuuu new/optimized/IMG_5564.JPG',
-        'anh/ki yeuuu new/optimized/IMG_5566.JPG',
         'anh/ki yeuuu new/optimized/IMG_5567.JPG',
         'anh/ki yeuuu new/optimized/IMG_5568.JPG',
         'anh/ki yeuuu new/optimized/IMG_5569.JPG',
