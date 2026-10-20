@@ -401,39 +401,51 @@ const IMAGES = {
   }
 
   function updateTrack() {
+    const cards = track.querySelectorAll('.feat-card');
+    const total = cards.length;
     const visible = getVisibleCount();
     const maxIndex = Math.max(0, total - visible);
-    currentIndex = Math.min(currentIndex, maxIndex);
+    currentIndex = Math.min(Math.max(0, currentIndex), maxIndex);
 
-    // Desktop: use CSS grid, no transform needed
-    if (visible >= 3) {
-      track.style.transform = '';
-      return;
-    }
-
-    // Tablet / Mobile: horizontal scroll by card width
-    const cardW = track.querySelector('.feat-card').offsetWidth;
-    const gap = 14;
+    const firstCard = track.querySelector('.feat-card');
+    if (!firstCard) return;
+    const cardW = firstCard.offsetWidth;
+    const style = window.getComputedStyle(track);
+    const gap = parseFloat(style.gap) || 20;
     const offset = currentIndex * (cardW + gap);
     track.style.transform = `translateX(-${offset}px)`;
+
+    // Update button visual state
+    prevBtn.style.opacity = currentIndex <= 0 ? '0.35' : '1';
+    prevBtn.style.pointerEvents = currentIndex <= 0 ? 'none' : 'auto';
+    nextBtn.style.opacity = currentIndex >= maxIndex ? '0.35' : '1';
+    nextBtn.style.pointerEvents = currentIndex >= maxIndex ? 'none' : 'auto';
   }
 
   prevBtn.addEventListener('click', () => {
-    if (currentIndex > 0) currentIndex--;
-    updateTrack();
+    if (currentIndex > 0) {
+      currentIndex--;
+      updateTrack();
+    }
   });
 
   nextBtn.addEventListener('click', () => {
+    const cards = track.querySelectorAll('.feat-card');
+    const total = cards.length;
     const visible = getVisibleCount();
     const maxIndex = Math.max(0, total - visible);
-    if (currentIndex < maxIndex) currentIndex++;
-    updateTrack();
+    if (currentIndex < maxIndex) {
+      currentIndex++;
+      updateTrack();
+    }
   });
 
   window.addEventListener('resize', () => {
-    currentIndex = 0;
     updateTrack();
   });
+
+  // Initial update
+  updateTrack();
 })();
 
 /* ───────────────────────────────────────────────────
@@ -578,36 +590,19 @@ const IMAGES = {
     'ki-yeu': {
       title: 'Kỉ yếu',
       images: [
-        'anh/tot nghiep/optimized/6BBBBD69-F4D9-4E34-8FA9-E038CD2F1872.jpg',
-        'anh/tot nghiep/optimized/IMG_3632.JPG',
-        'anh/tot nghiep/optimized/IMG_3633.JPG',
-        'anh/tot nghiep/optimized/IMG_3634.JPG',
-        'anh/tot nghiep/optimized/IMG_3635.JPG',
-        'anh/tot nghiep/optimized/IMG_3636.JPG',
-        'anh/tot nghiep/optimized/IMG_3658.JPG',
-        'anh/tot nghiep/optimized/IMG_3713.jpeg',
-        'anh/tot nghiep/optimized/IMG_3818.JPG',
-        'anh/tot nghiep/optimized/IMG_3819.JPG',
-        'anh/tot nghiep/optimized/IMG_3822.JPG',
-        'anh/tot nghiep/optimized/IMG_3823.JPG',
-        'anh/tot nghiep/optimized/IMG_3835.JPG',
-        'anh/tot nghiep/optimized/IMG_3836.JPG',
-        'anh/tot nghiep/optimized/IMG_3842.JPG',
-        'anh/tot nghiep/optimized/IMG_3843.JPG',
-        'anh/tot nghiep/optimized/IMG_3844.JPG',
-        'anh/tot nghiep/optimized/IMG_4020.JPG',
-        'anh/tot nghiep/optimized/IMG_4023.JPG',
-        'anh/tot nghiep/optimized/IMG_4024.JPG',
-        'anh/tot nghiep/optimized/IMG_4203.JPG',
-        'anh/tot nghiep/optimized/IMG_4204.JPG',
-        'anh/tot nghiep/optimized/IMG_4257.JPG',
-        'anh/tot nghiep/optimized/IMG_4285.JPG',
-        'anh/tot nghiep/optimized/IMG_4286.JPG',
-        'anh/tot nghiep/optimized/IMG_4398.JPG',
-        'anh/tot nghiep/optimized/IMG_4399.JPG',
-        'anh/tot nghiep/optimized/IMG_4404.JPG',
-        'anh/tot nghiep/optimized/IMG_4455.JPG',
-        'anh/tot nghiep/optimized/IMG_4456.JPG',
+        'anh/ki yeuuu new/optimized/IMG_5570.JPG',
+        'anh/ki yeuuu new/optimized/IMG_5571.JPG',
+        'anh/ki yeuuu new/optimized/IMG_5514.JPG',
+        'anh/ki yeuuu new/optimized/IMG_5539.JPG',
+        'anh/ki yeuuu new/optimized/IMG_5540.JPG',
+        'anh/ki yeuuu new/optimized/IMG_5561.JPG',
+        'anh/ki yeuuu new/optimized/IMG_5562.JPG',
+        'anh/ki yeuuu new/optimized/IMG_5563.JPG',
+        'anh/ki yeuuu new/optimized/IMG_5564.JPG',
+        'anh/ki yeuuu new/optimized/IMG_5566.JPG',
+        'anh/ki yeuuu new/optimized/IMG_5567.JPG',
+        'anh/ki yeuuu new/optimized/IMG_5568.JPG',
+        'anh/ki yeuuu new/optimized/IMG_5569.JPG'
       ]
     }
   };
@@ -911,6 +906,25 @@ const IMAGES = {
 
   // Featured stories collections
   const STORY_COLLECTIONS = {
+    'ki-yeu-new': {
+      tag: 'GRADUATION',
+      title: 'Kỷ niệm thanh xuân',
+      images: [
+        'anh/ki yeuuu new/optimized/IMG_5514.JPG',
+        'anh/ki yeuuu new/optimized/IMG_5539.JPG',
+        'anh/ki yeuuu new/optimized/IMG_5540.JPG',
+        'anh/ki yeuuu new/optimized/IMG_5561.JPG',
+        'anh/ki yeuuu new/optimized/IMG_5562.JPG',
+        'anh/ki yeuuu new/optimized/IMG_5563.JPG',
+        'anh/ki yeuuu new/optimized/IMG_5564.JPG',
+        'anh/ki yeuuu new/optimized/IMG_5566.JPG',
+        'anh/ki yeuuu new/optimized/IMG_5567.JPG',
+        'anh/ki yeuuu new/optimized/IMG_5568.JPG',
+        'anh/ki yeuuu new/optimized/IMG_5569.JPG',
+        'anh/ki yeuuu new/optimized/IMG_5570.JPG',
+        'anh/ki yeuuu new/optimized/IMG_5571.JPG'
+      ]
+    },
     'couple': {
       tag: 'PORTRAIT',
       title: 'Thanh xuân trong nắng',
@@ -936,41 +950,7 @@ const IMAGES = {
         'anh/couple/optimized/IMG_1388.jpeg',
         'anh/couple/optimized/IMG_1389.jpeg'
       ]
-    },
-    'ki-yeu': {
-      tag: 'GRADUATION',
-      title: 'Những năm tháng chúng ta',
-      images: [
-        'anh/tot nghiep/optimized/IMG_3632.JPG',
-        'anh/tot nghiep/optimized/IMG_3633.JPG',
-        'anh/tot nghiep/optimized/IMG_3634.JPG',
-        'anh/tot nghiep/optimized/IMG_3635.JPG',
-        'anh/tot nghiep/optimized/IMG_3636.JPG',
-        'anh/tot nghiep/optimized/IMG_3658.JPG',
-        'anh/tot nghiep/optimized/IMG_3713.jpeg',
-        'anh/tot nghiep/optimized/IMG_3818.JPG',
-        'anh/tot nghiep/optimized/IMG_3819.JPG',
-        'anh/tot nghiep/optimized/IMG_3822.JPG',
-        'anh/tot nghiep/optimized/IMG_3823.JPG',
-        'anh/tot nghiep/optimized/IMG_3835.JPG',
-        'anh/tot nghiep/optimized/IMG_3836.JPG',
-        'anh/tot nghiep/optimized/IMG_3842.JPG',
-        'anh/tot nghiep/optimized/IMG_3843.JPG',
-        'anh/tot nghiep/optimized/IMG_3844.JPG',
-        'anh/tot nghiep/optimized/IMG_4020.JPG',
-        'anh/tot nghiep/optimized/IMG_4023.JPG',
-        'anh/tot nghiep/optimized/IMG_4024.JPG',
-        'anh/tot nghiep/optimized/IMG_4203.JPG',
-        'anh/tot nghiep/optimized/IMG_4204.JPG',
-        'anh/tot nghiep/optimized/IMG_4257.JPG',
-        'anh/tot nghiep/optimized/IMG_4285.JPG',
-        'anh/tot nghiep/optimized/IMG_4286.JPG',
-        'anh/tot nghiep/optimized/IMG_4398.JPG',
-        'anh/tot nghiep/optimized/IMG_4399.JPG',
-        'anh/tot nghiep/optimized/IMG_4404.JPG',
-        'anh/tot nghiep/optimized/IMG_4455.JPG',
-        'anh/tot nghiep/optimized/IMG_4456.JPG'
-      ]
+
     },
     'tet': {
       tag: 'TRADITIONAL',
@@ -1001,8 +981,9 @@ const IMAGES = {
   };
 
   // Aliases
+  STORY_COLLECTIONS['ki-yeu']     = STORY_COLLECTIONS['ki-yeu-new'];
   STORY_COLLECTIONS['portrait']   = STORY_COLLECTIONS['couple'];
-  STORY_COLLECTIONS['graduation'] = STORY_COLLECTIONS['ki-yeu'];
+  STORY_COLLECTIONS['graduation'] = STORY_COLLECTIONS['ki-yeu-new'];
   STORY_COLLECTIONS['traditional']= STORY_COLLECTIONS['tet'];
 
   let activeImages = [];

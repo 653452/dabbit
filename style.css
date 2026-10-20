@@ -1023,22 +1023,23 @@ img:not([src=""]) ~ .thumb-placeholder-label {
 
 .featured-track-wrap {
   overflow: hidden;      /* desktop: ẩn track tràn */
-  overflow-x: auto;      /* cho phép swipe nếu cần */
   scrollbar-width: none;
 }
 .featured-track-wrap::-webkit-scrollbar { display: none; }
 
 .featured-track {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
   gap: 20px;
   transition: transform 0.55s cubic-bezier(0.4,0,0.2,1);
+  will-change: transform;
 }
 
 .feat-card {
   position: relative;
   overflow: hidden;
   cursor: pointer;
+  flex: 0 0 calc((100% - 40px) / 3);
+  min-width: 0;
 }
 
 .feat-img-slot {
@@ -2319,7 +2320,8 @@ img:not([src=""]) ~ .thumb-placeholder-label {
   /* Featured – horizontal swipe */
   .featured-track-wrap { overflow-x: auto; scrollbar-width: none; }
   .featured-track-wrap::-webkit-scrollbar { display: none; }
-  .featured-track { grid-template-columns: repeat(3, 78vw); gap: 12px; }
+  .featured-track { display: flex; gap: 12px; }
+  .feat-card { flex: 0 0 78vw; }
 
   /* Portfolio */
   .portfolio-header { flex-direction: column; gap: 18px; }
@@ -2469,10 +2471,11 @@ img:not([src=""]) ~ .thumb-placeholder-label {
   .featured-track-wrap      { overflow-x: auto; scrollbar-width: none; padding: 0 18px; }
   .featured-track-wrap::-webkit-scrollbar { display: none; }
   .featured-track {
-    grid-template-columns: repeat(3, 78vw);
+    display: flex;
     gap: 10px;
     padding-right: 18px;
   }
+  .feat-card { flex: 0 0 78vw; }
   .feat-title     { font-size: 16px; }
 
   /* ─ PORTFOLIO ─ */
