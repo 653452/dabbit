@@ -1095,6 +1095,11 @@ function makeImagePinchZoomable(imgEl, containerEl, onNavigate) {
       tag: 'GRADUATION',
       title: 'Kỷ niệm thanh xuân',
       images: [
+        'anh/ki yeuuu new/optimized/IMG_5580.JPG',
+        'anh/ki yeuuu new/optimized/IMG_5581.JPG',
+        'anh/ki yeuuu new/optimized/IMG_5583.JPG',
+        'anh/ki yeuuu new/optimized/IMG_5584.JPG',
+        'anh/ki yeuuu new/optimized/IMG_5585.JPG',
         'anh/ki yeuuu new/optimized/IMG_5514.JPG',
         'anh/ki yeuuu new/optimized/IMG_5539.JPG',
         'anh/ki yeuuu new/optimized/IMG_5540.JPG',
