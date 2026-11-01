@@ -768,6 +768,11 @@ function makeImagePinchZoomable(imgEl, containerEl, onNavigate) {
     'ki-yeu': {
       title: 'Kỉ yếu',
       images: [
+        'anh/ki yeuuu new/optimized/IMG_5580.JPG',
+        'anh/ki yeuuu new/optimized/IMG_5581.JPG',
+        'anh/ki yeuuu new/optimized/IMG_5583.JPG',
+        'anh/ki yeuuu new/optimized/IMG_5584.JPG',
+        'anh/ki yeuuu new/optimized/IMG_5585.JPG',
         'anh/ki yeuuu new/optimized/IMG_5570.JPG',
         'anh/ki yeuuu new/optimized/IMG_5571.JPG',
         'anh/ki yeuuu new/optimized/IMG_5514.JPG',
