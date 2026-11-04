@@ -31,6 +31,249 @@ const IMAGES = {
   cta: '/images/cta.jpg'
 };
 
+/* ═══════════════════════════════════════════════════
+   ADMIN DATA SYNC – Tự động nạp dữ liệu từ Admin Panel
+   (Lưu trữ trong localStorage với key 'dabbit_admin_data')
+═══════════════════════════════════════════════════ */
+function applyAdminData() {
+  const raw = localStorage.getItem('dabbit_admin_data');
+  if (!raw) return;
+
+  try {
+    const data = JSON.parse(raw);
+    window.__DABBIT_ADMIN_DATA = data;
+
+    function esc(s) {
+      return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+    function nl2br(s) {
+      return esc(s).replace(/\n/g, '<br>');
+    }
+
+    // 1. Cập nhật Hero Slides & Thumbs
+    if (Array.isArray(data.hero) && data.hero.length) {
+      const slides = document.querySelectorAll('.hero-slide');
+      const thumbs = document.querySelectorAll('.hero-thumb-item');
+
+      data.hero.forEach((src, idx) => {
+        if (!src) return;
+        if (slides[idx]) {
+          const img = slides[idx].querySelector('img');
+          if (img) img.src = src;
+        }
+        if (thumbs[idx]) {
+          thumbs[idx].setAttribute('data-src', src);
+          const thumbImg = thumbs[idx].querySelector('img');
+          if (thumbImg) thumbImg.src = src;
+        }
+      });
+    }
+
+    // 2. Cập nhật Featured Stories
+    if (Array.isArray(data.featured) && data.featured.length) {
+      const featCards = document.querySelectorAll('.feat-card');
+      data.featured.forEach((feat, idx) => {
+        const card = featCards[idx];
+        if (!card || !feat) return;
+        if (feat.title) {
+          const titleEl = card.querySelector('.feat-title');
+          if (titleEl) titleEl.textContent = feat.title;
+          card.setAttribute('data-title', feat.title);
+        }
+        if (feat.category) {
+          const catEl = card.querySelector('.feat-category');
+          if (catEl) catEl.textContent = feat.category;
+          card.setAttribute('data-cat', feat.category);
+        }
+        if (feat.type) {
+          card.setAttribute('data-story', feat.type);
+          const link = card.querySelector('.feat-link');
+          if (link) link.setAttribute('data-story', feat.type);
+        }
+        if (feat.image) {
+          const img = card.querySelector('img');
+          if (img) img.src = feat.image;
+        }
+      });
+    }
+
+    // 3. Cập nhật Bảng Giá (Pricing)
+    if (data.pricing) {
+      const pricingCards = document.querySelectorAll('.pricing-two-col .pricing-service');
+
+      // Gói Kỷ Yếu
+      const kyCard = Array.from(pricingCards).find(c => {
+        const name = c.querySelector('.pricing-name');
+        return name && name.textContent.toLowerCase().includes('kỷ');
+      }) || pricingCards[0];
+
+      if (kyCard && data.pricing.ky) {
+        const ky = data.pricing.ky;
+        if (ky.tagline) {
+          const tagEl = kyCard.querySelector('.pricing-tagline');
+          if (tagEl) tagEl.textContent = ky.tagline;
+        }
+        if (Array.isArray(ky.packages) && ky.packages.length) {
+          const pkgWrap = kyCard.querySelector('.pricing-packages');
+          if (pkgWrap) {
+            pkgWrap.innerHTML = ky.packages.map(p => `
+              <div class="pricing-pkg">
+                <div class="pricing-pkg-left">
+                  <span class="pkg-label">${esc(p.label)}</span>
+                </div>
+                <span class="pkg-price">${esc(p.price)}</span>
+              </div>
+            `).join('');
+          }
+        }
+        if (Array.isArray(ky.includes) && ky.includes.length) {
+          const incWrap = kyCard.querySelector('.pricing-includes-list');
+          if (incWrap) {
+            incWrap.innerHTML = ky.includes.map(inc => `
+              <li>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                ${esc(inc)}
+              </li>
+            `).join('');
+          }
+        }
+        if (ky.note) {
+          const noteEl = kyCard.querySelector('.pricing-note');
+          if (noteEl) {
+            noteEl.innerHTML = ky.note.split('\n').map(l => esc(l)).join('<br>');
+          }
+        }
+      }
+
+      // Gói Tết
+      const tetCard = Array.from(pricingCards).find(c => {
+        const name = c.querySelector('.pricing-name');
+        return name && name.textContent.toLowerCase().includes('tết');
+      }) || pricingCards[1];
+
+      if (tetCard && data.pricing.tet) {
+        const tet = data.pricing.tet;
+        if (tet.tagline) {
+          const tagEl = tetCard.querySelector('.pricing-tagline');
+          if (tagEl) tagEl.textContent = tet.tagline;
+        }
+        if (Array.isArray(tet.packages) && tet.packages.length) {
+          const pkgWrap = tetCard.querySelector('.pricing-packages');
+          if (pkgWrap) {
+            pkgWrap.innerHTML = tet.packages.map(p => {
+              const isAddon = p.label.toLowerCase().includes('phụ thu') || p.price.trim().startsWith('+');
+              return `
+                <div class="pricing-pkg ${isAddon ? 'pricing-pkg--addon' : ''}">
+                  <div class="pricing-pkg-left">
+                    <span class="pkg-label">${esc(p.label)}</span>
+                  </div>
+                  <span class="pkg-price ${isAddon ? 'pkg-price--accent' : ''}">${esc(p.price)}</span>
+                </div>
+              `;
+            }).join('');
+          }
+        }
+        if (tet.note) {
+          const noteEl = tetCard.querySelector('.pricing-note');
+          if (noteEl) {
+            noteEl.innerHTML = tet.note.split('\n').map(l => esc(l)).join('<br>');
+          }
+        }
+      }
+    }
+
+    // 4. Cập nhật Grid Portfolio & Ảnh bìa Album
+    if (data.portfolio || data.portfolioCovers) {
+      ['ki-yeu', 'couple', 'tet'].forEach(cat => {
+        const catImages = (data.portfolio && data.portfolio[cat]) || [];
+        const coverSrc  = (data.portfolioCovers && data.portfolioCovers[cat]) || catImages[0];
+
+        // 4.1 Cập nhật ảnh bìa lớn (port-wide)
+        const wideItem = document.querySelector(`.port-item.port-wide[data-category="${cat}"]`);
+        if (wideItem && coverSrc) {
+          const img = wideItem.querySelector('img');
+          if (img) img.src = coverSrc;
+        }
+
+        // 4.2 Cập nhật các ảnh còn lại trong category
+        const remainingImages = coverSrc ? catImages.filter(x => x !== coverSrc) : catImages;
+        const portraitItems = document.querySelectorAll(`.port-item:not(.port-wide)[data-category="${cat}"]`);
+        portraitItems.forEach((item, idx) => {
+          if (remainingImages[idx]) {
+            const img = item.querySelector('img');
+            if (img) img.src = remainingImages[idx];
+          }
+        });
+      });
+    }
+
+    // 5. Cập nhật Tiêu đề & Nội dung chung (Content)
+    if (data.content) {
+      const c = data.content;
+      if (c.heroLabel) {
+        const el = document.querySelector('.hero-label');
+        if (el) el.textContent = c.heroLabel;
+      }
+      if (c.heroTitle) {
+        const el = document.querySelector('.hero-title');
+        if (el) el.innerHTML = nl2br(c.heroTitle);
+      }
+      if (c.heroSubtitle) {
+        const el = document.querySelector('.hero-subtitle');
+        if (el) el.innerHTML = nl2br(c.heroSubtitle);
+      }
+      if (c.portfolioTitle) {
+        const el = document.querySelector('.portfolio-title');
+        if (el) el.innerHTML = nl2br(c.portfolioTitle);
+      }
+      if (c.pricingTitle) {
+        const el = document.querySelector('.pricing-title');
+        if (el) el.innerHTML = nl2br(c.pricingTitle);
+      }
+      if (c.availTitle) {
+        const el = document.querySelector('.availability-title');
+        if (el) el.innerHTML = nl2br(c.availTitle);
+      }
+      if (c.ctaTitle) {
+        const el = document.querySelector('.cta-title');
+        if (el) el.innerHTML = nl2br(c.ctaTitle);
+      }
+      if (c.ctaSubtitle) {
+        const el = document.querySelector('.cta-subtitle');
+        if (el) el.textContent = c.ctaSubtitle;
+      }
+      if (c.hotline) {
+        const cleanPhone = c.hotline.replace(/\s+/g, '');
+        document.querySelectorAll('a[href^="tel:"]').forEach(a => {
+          a.href = 'tel:' + cleanPhone;
+          const textSpan = a.querySelector('.top-nav-phone-num') || a.querySelector('strong');
+          if (textSpan) {
+            textSpan.textContent = c.hotline;
+          } else if (a.textContent.includes('0857')) {
+            a.textContent = '📞 ' + c.hotline;
+          }
+        });
+      }
+      if (c.zalo) {
+        document.querySelectorAll('a[href*="zalo.me"]').forEach(a => {
+          a.href = c.zalo;
+        });
+      }
+      if (c.messenger) {
+        document.querySelectorAll('a[href*="m.me"]').forEach(a => {
+          a.href = c.messenger;
+        });
+      }
+    }
+
+  } catch (err) {
+    console.warn('Lỗi load dabbit_admin_data:', err);
+  }
+}
+
+// Chạy cập nhật ngay khi script chạy
+applyAdminData();
+
 /* ───────────────────────────────────────────────────
    HERO GALLERY SLIDER & SWIPE
    - Đổi ảnh nền mượt mà qua cross-fade (không zoom, giữ nguyên kích thước)
@@ -792,6 +1035,39 @@ function makeImagePinchZoomable(imgEl, containerEl, onNavigate) {
   ALBUM_DATA['tot-nghiep'] = ALBUM_DATA['ki-yeu'];
   ALBUM_DATA['chan-dung']  = ALBUM_DATA['tet'];
   ALBUM_DATA['all']        = ALBUM_DATA['couple'];
+
+  // Đồng bộ ALBUM_DATA với Admin Panel
+  try {
+    const saved = localStorage.getItem('dabbit_admin_data');
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      if (parsed.portfolio) {
+        function prepareAlbumImages(cat) {
+          let list = Array.isArray(parsed.portfolio[cat]) ? [...parsed.portfolio[cat]] : [];
+          const cover = parsed.portfolioCovers && parsed.portfolioCovers[cat];
+          if (cover) {
+            list = [cover, ...list.filter(x => x !== cover)];
+          }
+          return list;
+        }
+
+        if (Array.isArray(parsed.portfolio['couple']) && parsed.portfolio['couple'].length) {
+          ALBUM_DATA.couple.images = prepareAlbumImages('couple');
+        }
+        if (Array.isArray(parsed.portfolio['tet']) && parsed.portfolio['tet'].length) {
+          ALBUM_DATA.tet.images = prepareAlbumImages('tet');
+        }
+        if (Array.isArray(parsed.portfolio['ki-yeu']) && parsed.portfolio['ki-yeu'].length) {
+          ALBUM_DATA['ki-yeu'].images = prepareAlbumImages('ki-yeu');
+        }
+        ALBUM_DATA['tot-nghiep'] = ALBUM_DATA['ki-yeu'];
+        ALBUM_DATA['chan-dung']  = ALBUM_DATA['tet'];
+        ALBUM_DATA['all']        = ALBUM_DATA['couple'];
+      }
+    }
+  } catch (e) {
+    console.warn('Sync album error:', e);
+  }
 
 
   /* ── 2. DOM refs ── */
